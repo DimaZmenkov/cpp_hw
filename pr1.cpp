@@ -11,7 +11,6 @@ void test(int c)
 	else cout<<"odd"
 }
 
-
 int _tmain(int argc, _TCHAR* argv[])
 {int n;
 	cin>>n;
