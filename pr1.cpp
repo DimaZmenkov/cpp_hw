@@ -5,6 +5,7 @@
 #include "iostream"
 using namespace std;
 
+
 void test(int c)
 {
 	if(c%2==0) cout<<"even";
