@@ -1,30 +1,31 @@
-// ConsoleApplication22.cpp: определяет точку входа для консольного приложения.
-//
+
 
 #include "stdafx.h"
 #include "iostream"
 #include "cstring"
+
 using namespace std;
-bool test(char c)
-{for(char i='a';i<='z';i++)
-		if (i==c) return true;
-	return false;}
-bool test1(char c)
-{for(char i='a';i<='z';i++)
-		if (i==c) return true;
-	for(char i='A';i<='Z';i++)
-if (i==c) return true;
-return false;}
+bool test(char ch)
+   
+{
+	return(ch >= 'a') && (ch <= 'z');
+}
+
+bool test1(char ch)
+
+{
+	return(ch >= 'a')&&(ch <= 'z')||(ch >= 'A')&&(ch <= 'Z');
+}
 int _tmain(int argc, _TCHAR* argv[])
-{int n=30;
-char *s=new char[n];
+{int maxSize = 30;
+char *str = new char[maxSize];
 cout<<"Input  string"<<endl;
-cin.getline(s,n);
-	int l=strlen(s);
-	if(test(s[0])) s[0]-=32;
-	for(int i=0;i<l-1;i++)
-	if((!test1(s[i]))&&(test(s[i+1]))) s[i+1]-=32;
+cin.getline(str, maxSize);
+	int length = strlen(str);
+	if(test(str[0])) str[0] -= 32;
+	for(int i=0;i<length-1;i++)
+	if((!test1(str[i]))&&(test(str[i+1]))) str[i+1] -= 32;
 		cout<<endl;
 cout<<"new string"<<endl;
-cout<<s;
+cout<<str<<endl;
 }
