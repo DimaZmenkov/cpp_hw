@@ -4,30 +4,40 @@
 #include "stdafx.h"
 #include "iostream"
 #include "cstring"
+
 using namespace std;
 
-char* concate (char s1[],char s2[])
-{int l=strlen(s1)+strlen(s2);
-char*  s = new char[l]();
-for(int i=0; i<l;i++)
-	if(i<strlen(s1)) s[i]=s1[i];
-	else s[i]=s2[i-strlen(s1)];
+char* concate (char str1[], char str2[])
+{
+	int length = strlen(str1) + strlen(str2) + 1;
+   char*  str = new char[length]();
+      
+   for(int i = 0; i < length;i++)
+	    if(i < strlen(str1)) str[i] = str1[i];
+	     else str[i] = str2[i - strlen(str1)];
+	str[length] = '\0';
 	
-return s;}
+	return str;
+}
 
 
 int _tmain(int argc, _TCHAR* argv[])
-{int n=10;
-char s1[]="545";
-char s2[]="11";
+{int n = 80;
+char str1[] = "545";
+char str2[] = "11";
 
-cout<<"Input first string";
-cin.getline(s1,n);
-cout<<"Input second string";
-	cin.getline(s2,n);
-	int l=strlen(s1)+strlen(s2);
-	char* s=concate(s1,s2);
-	for(int i=0; i<l;i++)
-	cout<<s[i];
-
+cout<<"Input first string"<<endl;
+cin.getline(str1, n);
+cout<<endl;
+cout<<"Input second string"<<endl;
+	cin.getline(str2, n);
+	cout<<endl;
+	int length = strlen(str1) + strlen(str2) + 1;
+	char* str = concate(str1, str2);
+	for(int i = 0; i < length;i++)
+	cout<<str[i];
+	cout<<endl;
+	delete[] str;
+	str = 0;
+	return 0;
 }
