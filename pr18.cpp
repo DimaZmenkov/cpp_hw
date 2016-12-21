@@ -67,20 +67,26 @@ cin>>pr[i].age;
 cout<<" Input salary"<<endl;
 cin>>pr[i].salary;
 }	
+bool *flagSupervisors = new bool[quantityProffessors];
+for(int j = 0;j < quantityProffessors;j++)
+	flagSupervisors[j] = false;
+
+
 for(int i = 0;i < sizeGroup;i++)
 {
 	count = i % quantityProffessors;
+	flagSupervisors[count]=true;
 group[i].supervisor = pr + count;
 if(group[i].supervisor -> age > 50) cout<<group[i].name<<endl;
 }
 cin>>count;
 
-
-
 for(int i = 0;i < sizeGroup;i++)
 	delete group[i].supervisor;
 delete[] group;
-delete[] pr;
+for(int i = 0;i < quantityProffessors;i++)
+	if(!flagSupervisors[i])
+	delete (pr+i);
 	return 0;
 }
 
