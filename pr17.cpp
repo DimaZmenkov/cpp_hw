@@ -1,52 +1,77 @@
-// ConsoleApplication30.cpp: определяет точку входа для консольного приложения.
-//
+
 
 #include "stdafx.h"
 #include "iostream"
+
 using namespace std;
-double** MatrixMultiply(double**a,double**b,int n ,int m ,int k)
-{double**c=new double*[n];
-for(int i=0;i<n;i++)
-	c[i]=new double[k];
-	for(int i=0;i<n;i++)
-for(int j=0;j<k;j++)
-{c[i][j]=0;
-for(int f=0;f<m;f++)
-	c[i][j]+=a[i][f]*b[f][j];}
-	return c;
+double** MatrixMultiply(double**aArray, double**bArray, int nSize, int mSize, int kSize)
+
+{
+	double**cArray = new double*[nSize];
+for(int i = 0;i < nSize;i++)
+	cArray[i] = new double[kSize];
+	for(int i = 0;i < nSize;i++)
+for(int j = 0;j < kSize;j++)
+{
+	cArray[i][j] = 0;
+for(int f = 0;f < mSize;f++)
+	cArray[i][j] += aArray[i][f] * bArray[f][j];}
+	return cArray;
 }
 
 	int _tmain(int argc, _TCHAR* argv[])
-{int n,m,k;
+
+	{
+	int nSize, mSize, kSize;
 
 	cout<<"Input sizes of first matrix"<<endl;
-	cin>>n>>m;
+	cin>>nSize>>mSize;
 	cout<<"Input second size second matrix"<<endl;
-	cin>>k;
-	double**a=new double*[n];
-for(int i=0;i<n;i++)
-	a[i]=new double[m];
-double**b=new double*[m];
-for(int i=0;i<m;i++)
-	b[i]=new double[k];
+	cin>>kSize;
+	double**aArray=new double*[nSize];
+for(int i = 0;i < nSize;i++)
+	aArray[i] = new double[mSize];
+double**bArray = new double*[mSize];
+for(int i = 0;i < mSize;i++)
+	bArray[i] = new double[kSize];
 cout<<"Input  first matrix "<<endl;
-for(int i=0;i<n;i++)
-for(int j=0;j<m;j++)
-	cin>>a[i][j];
+for(int i = 0;i < nSize;i++)
+for(int j = 0;j < mSize;j++)
+	cin>>aArray[i][j];
 cout<<endl;
 cout<<"Input  second matrix "<<endl;
-for(int i=0;i<m;i++)
-for(int j=0;j<k;j++)
-	cin>>b[i][j];
+for(int i = 0;i < mSize;i++)
+for(int j = 0;j < kSize;j++)
+	cin>>bArray[i][j];
 cout<<endl;
-double**c=new double*[n];
-for(int i=0;i<n;i++)
-	c[i]=new double[k];
-c=MatrixMultiply(a,b,n,m,k);
-for(int i=0;i<m;i++)
-{for(int j=0;j<k;j++)
-cout<<c[i][j]<<" ";
+//double**cArray = new double*[nSize];
+//for(int i = 0;i < nSize;i++)
+	//cArray[i] = new double[kSize];
+double**cArray = MatrixMultiply(aArray, bArray, nSize, mSize, kSize);
+for(int i = 0;i < mSize;i++)
+{
+	for(int j = 0;j < kSize;j++)
+cout<<cArray[i][j]<<" ";
 	cout<<endl;
 }
-return 0;
+
+for (int i = 0; i < nSize; i++) 
+{
+  delete [] aArray[i];
+}
+delete [] aArray;
+
+for (int i = 0; i < mSize; i++) 
+{
+  delete [] bArray[i];
+}
+delete [] bArray;
+
+
+for (int i = 0; i < nSize; i++) 
+{
+  delete [] cArray[i];
+}
+delete [] cArray;
+	return 0;
 	}
