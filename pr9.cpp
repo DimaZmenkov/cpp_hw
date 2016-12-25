@@ -16,9 +16,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	int  numberEncryption;
 	const int size = 50;
 	
-	const int tableSize = 36;
+	 
 	char str[size] ;
 const char str1 [] = "abcdefghijklmnopqrstuvwxyz0123456789";
+ int tableSize = strlen(str1);
 cout<<"Input  string"<<endl;
 cin.getline(str,size);
 	int length = strlen(str);
