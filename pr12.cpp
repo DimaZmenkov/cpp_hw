@@ -10,9 +10,10 @@ using namespace std;
 int _tmain(int argc, _TCHAR* argv[])
 {
 	int temp = 0, size = 12;
-cout<<"Input size of array"<<endl;
+	int *mArray = new int[size]();
+	cout<<"Input size of array less 13"<<endl;
 	cin>>size;
-int *mArray = new int[size]();
+
 cout<<"Input  array"<<endl;
 for(int i = 0;i < size;i++)
 	cin>>mArray[i];
@@ -23,6 +24,7 @@ cout<<"new  array"<<endl;
 for(int i = 0;i < size;i++)
 cout<<mArray[i]<<" ";
 	cout<<endl;
-return 0;	
+delete[] mArray;
+	return 0;	
 	    
 }
