@@ -39,5 +39,5 @@ cin.getline(str, maxSize);
        cout<<str<<endl;
 
 delete[] str;
-str=0;
+
 }
