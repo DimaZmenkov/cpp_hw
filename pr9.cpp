@@ -1,29 +1,46 @@
+// ConsoleApplication25.cpp: определяет точку входа для консольного приложения.
+//
+
 // ConsoleApplication21.cpp: определяет точку входа для консольного приложения.
 //
 
 #include "stdafx.h"
 #include "iostream"
 #include "cstring"
+
 using namespace std;
+
 int _tmain(int argc, _TCHAR* argv[])
-{int t,k,n=10,d=36;
-char *s=new char[n];
-char *s1=new char[d];
+
+{
+	int count, numberEncryption, size = 10;
+const int tableSize = 36;
+
+char str1 [tableSize];
+cout<<"Input  size of string"<<endl;
+cin>>size;
+char *str = new char[size];
 cout<<"Input  string"<<endl;
-cin.getline(s,n);
-	int l=strlen(s);t=0;
-	for(char i='a';i<='z';i++)
-	{s1[t]=i;t++;}
-	for(char i='0';i<='9';i++)
-	{s1[t]=i;t++;}
+cin.getline(str,size);
+	int length = strlen(str);count=0;
+	for(char i = 'a';i <= 'z';i++)
+	{
+		str1[count] = i;count++;}
+	for(char i = '0';i <= '9';i++)
+	{
+		str1[count] = i;count++;}
 	cout<<"table"<<endl;
-	for(int j=0;j<d;j++)
-		cout<<s1[j];
-	for(int i=0;i<l;i++)
-    for(int j=0;j<d;j++)
-if(s[i]==s1[j])
-{ k=(j+5)%d;s[i]=s1[k];break;}
+	for(int j = 0;j < tableSize;j++)
+		cout<<str1[j];
+	for(int i = 0;i < length;i++)
+    for(int j = 0;j < tableSize;j++)
+if(str[i] == str1[j])
+{ 
+	numberEncryption = (j + 5) % tableSize;str[i] = str1[numberEncryption];break;
+}
 cout<<endl;
 cout<<"new string"<<endl;
-cout<<s;
+cout<<str;
+delete[] str;
+return 0;
 }
