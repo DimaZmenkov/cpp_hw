@@ -47,7 +47,7 @@ for(int i = 0;i < strCount;i++)
 cout<<str[i];
 cout<<endl;
 delete[] str;
-str = 0;
+
 }
 
 
