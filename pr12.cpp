@@ -8,18 +8,20 @@ using namespace std;
 
 
 int _tmain(int argc, _TCHAR* argv[])
-{int b,l,n=12;
-int *m=new int[n];
-cout<<"Input  quantity of elements"<<endl;
-cin>>l;
+{int temp, length, size = 12;
+cout<<"Input size of array"<<endl;
+	cin>>size;
+int *mArray = new int[size];
+
 cout<<"Input  array"<<endl;
-for(int i=0;i<l;i++)
-	cin>>m[i];
-	for(int i=0;i<l-1;i++)
-			if(!(i&1)) {b=m[i];m[i]=m[i+1];m[i+1]=b;}
+for(int i=0;i < size;i++)
+	cin>>mArray[i];
+	
+for(int i=0;i < size-1;i++)
+			if(!(i&1)) {temp = mArray[i];mArray[i] = mArray[i+1];mArray[i+1] = temp;}
 cout<<"new  array"<<endl;
-for(int i=0;i<l;i++)
-cout<<m[i];
-		
+for(int i = 0;i < size;i++)
+cout<<mArray[i];
+	return 0;	
 	    
 }
