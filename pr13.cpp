@@ -6,22 +6,32 @@
 
 using namespace std;
 int _tmain(int argc, _TCHAR* argv[])
-{const int n=50;
-	int* m=new int[n];
-	int k,l=n;
-	k=0;
+{
+	const int  size = 50;
+	int mArray [size];
+	int pos1 = 0, pos2 ;
 	cout<<"old array"<<endl;
-	for(int i=1;i<100;i++)
-		if(i&1) {m[k]=i;cout<<m[k]<<" ";k++;}
-		cout<<endl;
+	for(int i = 1;i < 100;i++)
+		if(i & 1) {mArray[pos1] = i;cout<<mArray[pos1]<<" ";pos1++;}
+		 cout<<endl;
 	cout<<"new array"<<endl;
-		for(int i=0;i<n;i++)
-	{k=rand()%l;
-	cout<<m[k]<<" ";
-for(int j=k;j<l-1;j++)
-	m[j]=m[j+1];l--;
-    }
+		int quantityPermutation = 35 + rand() % 25;
+	int temp = 0;
+		for(int i = 0;i < quantityPermutation;i++)
+	{
+		pos1 = rand() % size;pos2 = rand() % size;
+	if(pos1 != pos2) 
+	
+	    { 
+		temp = mArray[pos1];mArray[pos1] = mArray[pos2];mArray[pos2] = temp;
+	    }
+	
+	}
 
-return 0;
+ cout<<"new array"<<endl;
+ for(int i = 0;i < size;i++)
+	  cout<<mArray[i]<<" ";
+	 cout<<endl;
+ return 0;
 }
 
