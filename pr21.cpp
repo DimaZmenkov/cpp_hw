@@ -12,14 +12,7 @@
 	class Shape { 
     public:
 	      virtual double GetArea() const = 0;
-	 virtual double GetHeight() const = 0;
-	 virtual	double GetWidth() const = 0;
-	 virtual	void SetWidth(double width) = 0;
-     virtual	void SetHeight(double height  ) = 0;
-	 virtual void SetSides(double* Sides) = 0 ;
-	  virtual double* GetSides()const = 0;	
-	virtual void SetRadius(double radius) = 0;
-	virtual double GetRadius()const = 0;
+	
 	  Shape()
 	
     {
@@ -42,9 +35,11 @@
      class Rectangle:public Shape 
     {
 	public:
-	Rectangle()
+	Rectangle(double height = 2, double width =1)
 	
 	{
+		m_height=height;
+		m_width=width;
 		cout<<"Rectangle constructor"<<endl;
 	}
 		
@@ -74,8 +69,12 @@
 	 class Triangle:public Shape
 	 {
     public:
-	void SetSides(double* Sides);
-	double* GetSides()const override ;
+	Triangle (double* sides)
+	{
+		m_sides=sides;
+	}
+		void SetSides(double* sides);
+	double* GetSides()const  ;
 	double GetArea()  const override ;
 	
     private:
@@ -85,8 +84,13 @@
     class Circle: public Shape {
 	
 	public:
-	void SetRadius(double radius) override ;
-	double GetRadius()const override ;
+		Circle(double radius)
+		{
+			m_radius = radius;
+		}
+
+		void SetRadius(double radius)  ;
+	double GetRadius()const  ;
 	double GetArea()  const override   
 	
 	{
@@ -144,7 +148,7 @@
 		return m_sides;
 	}
 
-	double Triangle:: GetArea()  const //override
+	double Triangle:: GetArea()  const 
 	
 	{
 		double semiperimeter, product;
@@ -176,25 +180,24 @@ for(int i = 0;i < 3;i++)
 	{
 		
 
-    Shape* pRectangle= new Rectangle;
+    Shape* pRectangle= new Rectangle(3,2);
     pRectangle->SetColor(black);
-    pRectangle->SetWidth(2);
-    pRectangle ->SetHeight(2);
+    
    
 	double squareFig = pRectangle->GetArea();
     cout<<"S Rectangle"<<endl;
     cout<<squareFig<<endl;
-    Shape* pCircle = new Circle;
-   pCircle->SetRadius(3);
+    Shape* pCircle = new Circle(9);
+ 
     squareFig = pCircle->GetArea();
     cout<<"S Circle"<<endl;
     cout<<squareFig<<endl;
-    
-	Shape* pTriangle = new Triangle;
     double sides[3];
     for(int i = 0;i < 3;i++)
     sides[i] = i+3;
-    pTriangle->SetSides(sides);	
+	Shape* pTriangle = new Triangle(sides);
+    
+   
 
    squareFig = pTriangle->GetArea();
     cout<<"S Triangle"<<endl;
