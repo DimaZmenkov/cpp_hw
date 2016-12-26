@@ -143,5 +143,6 @@ char ch;
  for(int j = 0;j < count +  sizePass ;j++)
 	fout<<buff[j];
 	fout.close();
-return 0;
+	delete[] buff;
+	return 0;
 }
