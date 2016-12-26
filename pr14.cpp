@@ -74,6 +74,7 @@ char ch;
 		
 		while( !flag )
 		{
+//obtain the password from the symbol table
 			flag1 = 0;flag2 = 0;flag3 = 0;flag01 = false;
 			for(int j = 0;j < sizePass;j++)
 			
@@ -81,8 +82,10 @@ char ch;
 			count2 = rand() % sizeTable; pass[j] = table[count2];
 				
 			if(!flag01)
-			         
-			          {
+			        //password verification for compliance with .
+						//Checks passwords characters until you have established a standard
+			   // not necessarily check all password characters      
+			{
 				if(j > 2) if(flag1 + flag2 + flag3 == 3) flag01 = true;
 				if(!flag01) if(test1(pass[j])) 
 				
@@ -108,6 +111,8 @@ char ch;
 		if(!flag01) continue;
 			count1 = 0;
 		flag = true;count0 = 0;
+		//the password is checked against a list of passwords made earlier
+		//passwords are compared to the first differing character
 		while(count0 < count)
 
 		{
