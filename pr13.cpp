@@ -12,7 +12,12 @@ int _tmain(int argc, _TCHAR* argv[])
 	int pos1 = 0, pos2 ;
 	cout<<"old array"<<endl;
 	for(int i = 1;i < 100;i++)
-		if(i & 1) {mArray[pos1] = i;cout<<mArray[pos1]<<" ";pos1++;}
+		if(i & 1) 
+		
+		{
+			mArray[pos1] = i;cout<<mArray[pos1]<<" ";pos1++;
+		}
+
 		 cout<<endl;
 	cout<<"new array"<<endl;
 		int quantityPermutation = 35 + rand() % 25;
