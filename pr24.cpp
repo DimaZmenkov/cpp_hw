@@ -8,7 +8,7 @@
 
 using namespace std;
 template<typename T>
-    int*  map ( int (*pf_map) (T ), T* aArray, T size)
+    T*  map ( int (*pf_map) (T ), T* aArray, size_t size)
 	{
 		for(int i = 0;i < size;i++)
 	     
@@ -18,7 +18,7 @@ template<typename T>
 	
 	}
 	  template<typename T>
-	int* filter ( bool (*pf_filter) (T ), T *aArray, T size ,  T &rSize_out)
+	T* filter ( bool (*pf_filter) (T ), T *aArray, size_t size ,  int &rSize_out)
 	{
 		int *bArray = new int[size];
 	
@@ -32,7 +32,7 @@ template<typename T>
 	
 	}
 	template<typename T>
-	int reduce (T (*pf_reduce) (T, T ), T*aArray, T size )
+	T reduce (T (*pf_reduce) (T, T ), T*aArray, size_t size )
 	{
 	for(int i = 1;i < size;i++)
 	aArray[0] = pf_reduce(aArray[0], aArray[i]);
@@ -72,10 +72,10 @@ template<typename T>
 	}
 		int _tmain(int argc, _TCHAR* argv[])
     {
-		int size, result;
+		int  result;
     //int (*pf_map) (int );
     //bool (*pf_filter) (int );
-    
+   size_t size;
 		
     
 		cout<<"Input quantity elements of array"<<endl;
