@@ -9,15 +9,17 @@
 		red, yellow, green, blue, black, white
 	};
     
-	class Shape { 
+	class Shape 
+	{ 
     public:
 	      virtual double GetArea() const = 0;
 	
-	  Shape()
+	  Shape():
+		m_color(white) 
 	
     {
 		cout<<"Shape constructor"<<endl;
-		m_color=white;
+		
 	}
 	 
 	virtual ~Shape()
@@ -35,11 +37,10 @@
      class Rectangle:public Shape 
     {
 	public:
-	Rectangle(double height = 2, double width =1)
-	
+	Rectangle(double height = 2, double width =1):
+	m_height(height),
+	m_width(width)
 	{
-		m_height=height;
-		m_width=width;
 		cout<<"Rectangle constructor"<<endl;
 	}
 		
@@ -69,10 +70,10 @@
 	 class Triangle:public Shape
 	 {
     public:
-	Triangle (double* sides)
+	Triangle (double* sides):
+	m_sides(sides)
 	{
-		m_sides=sides;
-	}
+		}
 		void SetSides(double* sides);
 	double* GetSides()const  ;
 	double GetArea()  const override ;
@@ -81,12 +82,14 @@
 	double* m_sides;
     };
 
-    class Circle: public Shape {
+    class Circle: public Shape 
+	{
 	
 	public:
-		Circle(double radius)
+		Circle(double radius):
+		m_radius(radius)
 		{
-			m_radius = radius;
+			
 		}
 
 		void SetRadius(double radius)  ;
