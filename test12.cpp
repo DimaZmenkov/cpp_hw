@@ -1,7 +1,7 @@
 
 #include "stdafx.h"
 #include <iostream>
-
+#include <string>
 using namespace std;
 
 class HTMLElement
@@ -25,7 +25,7 @@ class HTMLImageElement:public  HTMLElement
 	const string& Url() const;
 	string Render() override
 	{
-		string str = "<img src=../../smiley.gif height=42 width=4> ";
+		string str ( "<img src=../../smiley.gif height=42 width=4> ");
 	return str;
 	}
 };
@@ -35,12 +35,12 @@ class HTMLTextAreaElement:public  HTMLElement
 	const string& Content() const;
 	string Render() override
 	{
-	string str = "<textarea>content-of-the-text-area</textarea>";
+	string str( "<textarea>content-of-the-text-area</textarea>");
 return str;
 	}
 };
 string HTMLButtonElement::Render()
-{string str = "<button>title-of-the-button</button> ";
+{string str ( "<button>title-of-the-button</button> ");
 	return str;
 }
 
@@ -50,8 +50,8 @@ int _tmain(int argc, _TCHAR* argv[])
 		HTMLElement* pButton = new HTMLButtonElement();
 	HTMLElement* pImage  = new HTMLImageElement();
     HTMLElement* pTextArea = new HTMLTextAreaElement();
-	pButton -> Render();
-	 pImage -> Render();
-	 pTextArea -> Render();
+	cout<<pButton -> Render()<<endl;
+	cout<< pImage -> Render()<<endl;
+	cout<< pTextArea -> Render()<<endl;
 return 0;
 }
