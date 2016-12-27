@@ -8,7 +8,7 @@
 
 using namespace std;
 template<typename T>
-    T*  map ( int (*pf_map) (T ), T* aArray, size_t size)
+    T*  map ( T (*pf_map) ( T ), T* aArray, size_t size)
 	{
 		for(int i = 0;i < size;i++)
 	     
@@ -18,7 +18,7 @@ template<typename T>
 	
 	}
 	  template<typename T>
-	T* filter ( bool (*pf_filter) (T ), T *aArray, size_t size ,  int &rSize_out)
+	T* filter ( bool (*pf_filter) (const T& ), T *aArray, size_t size ,  int &rSize_out)
 	{
 		int *bArray = new int[size];
 	
@@ -32,7 +32,7 @@ template<typename T>
 	
 	}
 	template<typename T>
-	T reduce (T (*pf_reduce) (T, T ), T*aArray, size_t size )
+	T reduce (T (*pf_reduce) (T, T), T*aArray, size_t size )
 	{
 	for(int i = 1;i < size;i++)
 	aArray[0] = pf_reduce(aArray[0], aArray[i]);
