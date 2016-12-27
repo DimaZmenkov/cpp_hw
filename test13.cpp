@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include <iostream>
+#include <string>
 
 using namespace std;
 class HTMLElement
@@ -16,7 +17,7 @@ class HTMLButtonElement: public  HTMLElement
 	public:
 	const string& Title() const;
 	string Render() override;
-	 HTMLElement* Duplicate() //override
+	 HTMLElement* Duplicate() override
 	 {
 	 return new HTMLButtonElement();
 	 }
@@ -30,7 +31,7 @@ class HTMLImageElement:public  HTMLElement
 		string str = "<img src=../../smiley.gif height=42 width=4> ";
 	return str;
 	}
-	HTMLElement* Duplicate() //override
+	HTMLElement* Duplicate() override
 	{
      return new HTMLImageElement();
 	}
@@ -64,7 +65,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	  for(int i = 0;i < 3;i++)
 		  {
 			  pArray1 [i] =  pArray[i] ->  Duplicate();
-			   pArray1 [i] -> Render();
+			  cout<<pArray1 [i] -> Render()<<endl;
 	      }
 //#4
 
