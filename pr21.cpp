@@ -1,213 +1,127 @@
-// ConsoleApplication55.cpp: определяет точку входа для консольного приложения.
+// ConsoleApplication54.cpp: определяет точку входа для консольного приложения.
 //
-    #include "stdafx.h"
-    #include "iostream"
-    using namespace std;
-   
-	enum color
+
+
+//#include "cassert"
+#include "stdafx.h"
+#include <iostream>
+
+using namespace std;
+template<typename T>
+    T*  map ( int (*pf_map) (T ), T* aArray, size_t size)
 	{
-		red, yellow, green, blue, black, white
-	};
-    
-	class Shape 
-	{ 
-    public:
-	      virtual double GetArea() const = 0;
+		for(int i = 0;i < size;i++)
+	     
+			aArray[i] = pf_map(aArray[i]) ;
 	
-	  Shape():
-		m_color(white) 
+		return aArray;
 	
+	}
+	  template<typename T>
+	T* filter ( bool (*pf_filter) (T ), T *aArray, size_t size ,  int &rSize_out)
+	{
+		int *bArray = new int[size];
+	
+		for(int i = 0; i < size; i++)
+	     
+			if(pf_filter(aArray[i]))
+			{ 
+				bArray[rSize_out] = aArray[i];rSize_out++;
+		    }
+	return bArray;
+	
+	}
+	template<typename T>
+	T reduce (T (*pf_reduce) (T, T ), T*aArray, size_t size )
+	{
+	for(int i = 1;i < size;i++)
+	aArray[0] = pf_reduce(aArray[0], aArray[i]);
+	
+	return aArray[0];
+	
+	}
+	 template<typename T>
+	T func_map1(T value)
+	{
+		return value + 5;
+	}
+	template<typename T>
+	T func_map2(T value)
+	{
+		return 2 * value;
+	}
+	template<typename T>
+	bool func_filter1(T value)
+	{
+		return value > 10;
+	}
+	template<typename T>
+	bool func_filter2(T value)
+	{
+		return value > 20;
+	}
+	template<typename T>
+	T func_reduce1(T x, T y  )
+	{
+		return 2 * x + y;
+	}
+	template<typename T>
+	T func_reduce2(T x, T y  )
+	{
+		return 2 * x -  y;
+	}
+		int _tmain(int argc, _TCHAR* argv[])
     {
-		cout<<"Shape constructor"<<endl;
+		int  result;
+    //int (*pf_map) (int );
+    //bool (*pf_filter) (int );
+   size_t size;
 		
-	}
-	 
-	virtual ~Shape()
+    
+		cout<<"Input quantity elements of array"<<endl;
+	cin>>size;
 	
-	{
-		cout<<"Shape destructor"<<endl;
-    }
+	int*aArray = new int[size];
 	
-	 inline void SetColor(color col);
-	 inline double GetColor() const;
-
-	 private:
-	   color m_color;
-     };
-     class Rectangle:public Shape 
+	cout<<"Input  array"<<endl;
+    for(int i = 0;i < size;i++)	
+	cin>>aArray[i];
+    
+	aArray = map<int>(func_map1, aArray, size);
+    cout<<"  array after map"<<endl;
+    
+	for(int i = 0;i < size;i++)
+    cout<<aArray[i]<<" ";
+    cout<<endl;
+    
+	int size_out = 0;
+    int* bArray = filter<int>(func_filter1, aArray, size, size_out);
+    cout<<"  array after filter"<<endl;
+    
+	for(int i = 0;i < size_out;i++)
+   
+		cout<<bArray[i]<<" ";
+    
+	cout<<endl;
+    delete[] aArray;
+   
+	aArray = 0;
+    
+	
+    
+	if(size_out > 1)
     {
-	public:
-	Rectangle(double height = 2, double width =1):
-	m_height(height),
-	m_width(width)
-	{
-		cout<<"Rectangle constructor"<<endl;
-	}
-		
-	virtual ~Rectangle()
+		result = reduce<int>(func_reduce1, bArray, size_out );
+     delete[] bArray;
+    bArray = 0;
 	
-	{
-		cout<<"Rectangle destructor"<<endl;
-	}
-	
-		double GetHeight() const;
-		double GetWidth() const;
-		void SetWidth(double width);
-	void SetHeight(double height  );
-		double GetArea() const  override
-		
-		{
-			return m_width * m_height;
-		}
-
-	
-	private:
-	double m_width;
-	double m_height;
-	
-    };
-    
-	 class Triangle:public Shape
-	 {
-    public:
-	Triangle (double* sides):
-	m_sides(sides)
-	{
-		}
-		void SetSides(double* sides);
-	double* GetSides()const  ;
-	double GetArea()  const override ;
-	
-    private:
-	double* m_sides;
-    };
-
-    class Circle: public Shape 
-	{
-	
-	public:
-		Circle(double radius):
-		m_radius(radius)
-		{
-			
-		}
-
-		void SetRadius(double radius)  ;
-	double GetRadius()const  ;
-	double GetArea()  const override   
-	
-	{
-		return 3.14 * m_radius * m_radius;
-	}
-	
-	private:
-	double m_radius;
-    };
-    double Shape::GetColor() const
-	
-	{
-		return m_color;
-	} 
-
-	void Shape::SetColor(color col)
-	
-	{
-		m_color = col;
-	}
-
-	double Rectangle::GetHeight() const
-	
-	{
-		return m_height;
-	}
-
-	double Rectangle::GetWidth() const
-	
-	{
-		return m_width; 
-	}
-
-	void Rectangle::SetWidth(double width)
-	
-	{
-		m_width=width;
-	}
-
-	void Rectangle::SetHeight(double height  )
-	
-	{ 
-		m_height=height;
-	}
-
-	void Triangle::SetSides(double* sides)
-	
-	{
-		m_sides=sides;
-	}
-
-	double*Triangle:: GetSides()const
-	
-	{
-		return m_sides;
-	}
-
-	double Triangle:: GetArea()  const 
-	
-	{
-		double semiperimeter, product;
-	semiperimeter = 0;
-	for(int i = 0;i < 3;i++)
-		semiperimeter += m_sides[i];
-		semiperimeter /= 2;
-		product = semiperimeter;
-for(int i = 0;i < 3;i++)
-	product *= (semiperimeter - m_sides[i]);
-		product = sqrt(product);	
-		return product;
-	}
-
-	void Circle::SetRadius(double radius)
-	
-	{
-		m_radius=radius;
-	}
-
-	double Circle::GetRadius()const
-	
-	{
-		return m_radius;
-	}
-
-    int _tmain(int argc, _TCHAR* argv[])
-   
-	{
-		
-
-    Shape* pRectangle= new Rectangle(3,2);
-    pRectangle->SetColor(black);
-    
-   
-	double squareFig = pRectangle->GetArea();
-    cout<<"S Rectangle"<<endl;
-    cout<<squareFig<<endl;
-    Shape* pCircle = new Circle(9);
- 
-    squareFig = pCircle->GetArea();
-    cout<<"S Circle"<<endl;
-    cout<<squareFig<<endl;
-    double sides[3];
-    for(int i = 0;i < 3;i++)
-    sides[i] = i+3;
-	Shape* pTriangle = new Triangle(sides);
-    
-   
-
-   squareFig = pTriangle->GetArea();
-    cout<<"S Triangle"<<endl;
-    cout<<squareFig<<endl;
-
-    return 0;
-
+	cout<<"  value after reduce"<<endl;
+    cout<<result<<endl;
     }
-
+         else
+		 {
+			 cout<<"  can not reduce"<<endl;
+	     }
+			 return 0;
+    }
 
