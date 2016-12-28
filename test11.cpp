@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include <iostream>
 #include <cassert>
-#
+
 //#include <algorithm>
 
 using namespace std;
@@ -23,10 +23,10 @@ ImmutableBuffer(T* array, size_t length):
 {
 	delete[] m_array;
 }
-
 friend ostream& operator<<(ostream& stream, const ImmutableBuffer & rhs)
-   {
-      return stream << rhs.m_array;
+   {for (int i = 0;i <rhs.m_length ;i++)
+      stream << rhs.m_array[i];
+      return stream ;
    }
 
 bool operator ==(const T& rhs)
