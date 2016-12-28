@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include <iostream>
-
+# include <string>
 using namespace std;
 
 class HTMLElement
@@ -10,6 +10,13 @@ public:
 			 unsigned Height() const;
 			 bool Hidden() const;
 			 virtual string Render() = 0;
+			 bool getFlag() const
+			 {
+				 return m_flag;
+			 }
+			 private:
+	
+	mutable bool m_flag;
 };
 class HTMLButtonElement: public  HTMLElement
 { 
@@ -49,7 +56,7 @@ bool all_of(T* arr, size_t length, bool(*p)(const T& elem))
 {
 	for(int i = 0;i < length ;i++)
 if(!p(arr[i])) return false; 
-	return true
+	return true;
 }
 template<typename T>
 bool any_of(T* arr, size_t length, bool(*p)(const T& elem))
@@ -58,10 +65,36 @@ for(int i = 0;i < length ;i++)
 if(p(arr[i])) return true; 
 return false;
 }
+ template<typename T>
+bool func(const T& elem)
+ {
+	 return elem -> getFlag() ;
+ }
+bool HTMLElement::Hidden() const
+ {
+	 static int count;
+ count++;
+ 
+ if (count % 2 ==0)
+	 m_flag = true;
+ else m_flag = false;
+
+ return m_flag;
+}
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-//#4
+	 HTMLElement* pArray[3];
+	 pArray [0] = new HTMLButtonElement();
+	 pArray [1] = new HTMLImageElement();
+	 pArray [2] = new HTMLTextAreaElement();
+	for(int i = 0;i < 3 ;i++)
+		{
+	pArray[i]->Hidden();
+	}
+ cout<<any_of<HTMLElement*>(pArray, 3, func)<<endl;
+ 
+	 cout<<all_of<HTMLElement*>(pArray, 3, func)<<endl;
 
 
 
