@@ -6,32 +6,43 @@
 using namespace std;
    //https://ru.wikipedia.org/wiki/%D0%A0%D0%B8%D0%BC%D1%81%D0%BA%D0%B8%D0%B5_%D1%86%D0%B8%D1%84%D1%80%D1%8B
   // there are only six uses of "subtraction rule":
-//    |V = 4
+//    IV = 4
 //    |X = 9
 //    XL = 40
 //    XC = 90
 //    CD = 400
 //    CM = 900
 
-
+ 
     
 	class RomansNumber { 
     public:
 	   
 		
-		RomansNumber(char* str)  
+		RomansNumber(const char* str)  
 		{
 
 	 m_arabian = ConvertToArabian(str);
-	   
-	   }
+	   //const char 
+		  // tableRomans[] = "IVXLCDM";
+	 // const int 
+		 // arabiansArray[] = {1, 5, 10, 50, 100, 500, 1000};
+		}
 	RomansNumber()
 	{
+		//const int 
+			//arabiansArray[] = {1, 5, 10, 50, 100, 500, 1000};
+	 //const char 
+		// tableRomans[] = "IVXLCDM";
 	}
 	  
-	RomansNumber(int arabian)
+	RomansNumber(int arabian):
+m_arabian(arabian)
 	{
-	m_arabian = arabian;
+		 //const char 
+			// tableRomans[] = "IVXLCDM";
+		// const int 
+			 //arabiansArray[] = {1, 5, 10, 50, 100, 500, 1000};
 	}
 	RomansNumber& operator = (const RomansNumber& rhs)
 	{
@@ -50,14 +61,13 @@ using namespace std;
 	   }
 	   
 	   
-	 static   int ConvertToArabian(char * m_number) 
+	 static   int ConvertToArabian(const char * m_number) 
 	
 	
 	{
 		bool flag = false;
 		int length = strlen(m_number);
-    char tableRomans[] = "|VXLCDM";
-	int arabiansArray[]={1, 5, 10, 50, 100, 500, 1000};
+  
 	int count = 0;
 	int sum = 0;
 	while(count < length)
@@ -92,8 +102,8 @@ using namespace std;
 	 {
 		bool flag = false;
 		char str[50]  ;
-    char tableRomans[] = "|VXLCDM";
-	int arabiansArray[]={1, 5, 10, 50, 100, 500, 1000};
+  
+	
 	int count1 = 0, count = 6;
 	int digit, sum = 0;
 	int balance = number;
@@ -142,8 +152,7 @@ return str1;
 	 {
 		bool flag = false;
 		char str[50]  ;
-    char tableRomans[] = "|VXLCDM";
-	int arabiansArray[]={1, 5, 10, 50, 100, 500, 1000};
+ 
 	int count1 = 0, count = 6;
 	int digit, sum = 0;
 	int balance = number;
@@ -207,8 +216,27 @@ char*str1 =	new char[count1 + 1 ];
 	const	RomansNumber  operator ++ (int);
 	 const	RomansNumber&  operator -- ();
 	 const	RomansNumber  operator -- (int);
-		friend ostream& operator << (ostream& stream, const RomansNumber& rhs);
- // explicit  operator int() const
+		
+	 
+	 friend ostream& operator << (ostream& stream, const RomansNumber& rhs);
+		
+	 
+	 
+	 //ostream& operator << (ostream& stream, const RomansNumber& rhs)
+	// without coomments compiler Visua Studio returned message:
+		 //{  	5	IntelliSense: слишком много параметров для этой функции оператора	c:\Users\User\Documents\Visual Studio 2012\Projects\ConsoleApplication93\ConsoleApplication93\ConsoleApplication93.cpp	225	12	ConsoleApplication93
+
+	   //int length = 1;
+	   //char*str = RomansNumber::ConvertToRomans(rhs.m_arabian, length);
+	   //for (int i = 0;i <length ;i++)
+      //stream << str[i];
+      //return stream ;
+		//}
+		
+	 
+	 
+	 
+	 // explicit  operator int() const
   //  {          without coomments compiler Visua Studio returned message:
 	//	Ошибка	1	error C2071: RomansNumber::operator int: недопустимый класс хранения	c:\users\user\documents\visual studio 2012\projects\consoleapplication91\consoleapplication91\consoleapplication91.cpp	212	1	ConsoleApplication91
 
@@ -216,17 +244,20 @@ char*str1 =	new char[count1 + 1 ];
 	//	return m_arabian;   
   //  } 
 private:
-		
+		static const char tableRomans[8]  ;
+	static const int arabiansArray[7];
 	 int  m_arabian;
      };
-     
+      const char RomansNumber::tableRomans[] = "IVXLCDM";
+	 const int RomansNumber::arabiansArray[] = {1, 5, 10, 50, 100, 500, 1000};
 	RomansNumber RomansNumber::operator + (const RomansNumber & rhs)
 	{
       return  RomansNumber (m_arabian + rhs.m_arabian);
 	}
    RomansNumber& RomansNumber::operator += (const RomansNumber & rhs)
 	{
-     return (*this = *this + rhs);
+     m_arabian += rhs.m_arabian;
+		return *this ;
 	}
     RomansNumber RomansNumber::operator * (const RomansNumber & rhs)
 	{
@@ -235,7 +266,8 @@ private:
 	}
 	RomansNumber&  RomansNumber::operator *= (const RomansNumber & rhs)
 	{
-     return *this = *this * rhs;
+     m_arabian *= rhs.m_arabian;
+		return *this ;
 	}
 	RomansNumber RomansNumber:: operator - (const RomansNumber & rhs)
 	{
@@ -243,16 +275,18 @@ private:
 	}
 	 RomansNumber& RomansNumber::operator -= (const RomansNumber & rhs)
 		 {
-     return *this = *this - rhs;
-	}
+     m_arabian -= rhs.m_arabian;
+		return *this ;
+	     }
 	RomansNumber  RomansNumber::operator / (const RomansNumber & rhs)
 		{
 			return  RomansNumber (m_arabian / rhs.m_arabian);
-	}
+	    }
 	RomansNumber& RomansNumber::operator /= (const RomansNumber & rhs)
 		 {
-     return *this = *this / rhs;
-	}
+     m_arabian /= rhs.m_arabian;
+		return *this ;
+	     }
 	 bool RomansNumber::operator == (const RomansNumber & rhs)
 	 {
 		 return rhs.m_arabian == m_arabian;
@@ -301,7 +335,8 @@ private:
 		return tmp;
 		}
 		
-		ostream& operator<<(ostream& stream, const RomansNumber& rhs)
+		
+			ostream& operator<<(ostream& stream, const RomansNumber& rhs)
    {
 	   int length = 1;
 	   
@@ -312,6 +347,13 @@ private:
       return stream ;
    }
     
+	
+		
+		
+		
+		
+		
+		
 		int _tmain(int argc, _TCHAR* argv[])
    
 	{
@@ -325,10 +367,10 @@ private:
 //    CD = 400
 //    CM = 900
        
-		RomansNumber r("MM|");
+		RomansNumber r("XI");
 	    
-		RomansNumber r1("MMV");
-		cout<<r.ConvertToArabian("XX|X")<<endl; 
+		RomansNumber r1("XV");
+		cout<<r.ConvertToArabian("XXIX")<<endl; 
 		  int  length = 1;
 		char *str = r.ConvertToRomans(3999, length);
     
@@ -338,10 +380,11 @@ private:
     cout<<endl; 
 	RomansNumber r2 =r1+r;
 	   r1 =r++;
+	   r1 *= r;
 	   cout<<r1<<endl;
 	   cout<<r<<endl;
 	   //assert(r <= r1);
-	
+	 cout<<"11111111111111111111111111111111111111111111111"<<endl;
 	   return 0;
 	
 		
