@@ -23,26 +23,17 @@ using namespace std;
 		{
 
 	 m_arabian = ConvertToArabian(str);
-	   //const char 
-		  // tableRomans[] = "IVXLCDM";
-	 // const int 
-		 // arabiansArray[] = {1, 5, 10, 50, 100, 500, 1000};
+	  
 		}
 	RomansNumber()
 	{
-		//const int 
-			//arabiansArray[] = {1, 5, 10, 50, 100, 500, 1000};
-	 //const char 
-		// tableRomans[] = "IVXLCDM";
+		
 	}
 	  
 	RomansNumber(int arabian):
 m_arabian(arabian)
 	{
-		 //const char 
-			// tableRomans[] = "IVXLCDM";
-		// const int 
-			 //arabiansArray[] = {1, 5, 10, 50, 100, 500, 1000};
+		
 	}
 	RomansNumber& operator = (const RomansNumber& rhs)
 	{
@@ -98,7 +89,7 @@ m_arabian(arabian)
 	
 	}
 	
-	   static char* ConvertToRomans(int number,int& rLength) 
+	   static void ConvertToRomans(int number, int& rLength, char*& paramArray) 
 	 {
 		bool flag = false;
 		char str[50]  ;
@@ -138,64 +129,17 @@ m_arabian(arabian)
 	    balance -= arabiansArray[count] * digit; count--;
 	
 	}
-char*str1 =	new char[count1 + 1 ];
+//char*str1 =	new char[count1 + 1 ];
 	for (int i = 0; i < count1; i++)
 	     {
-		str1[i] = str[i];
+		paramArray[i] = str[i];
 	     }
-	str1[count1] = '\n';
+	paramArray[count1] = '\n';
 	rLength = count1;
-return str1;
+//return str1;
             }
 
-	   static char* ConvertToRomans(int number) 
-	 {
-		bool flag = false;
-		char str[50]  ;
- 
-	int count1 = 0, count = 6;
-	int digit, sum = 0;
-	int balance = number;
-	
-	
-	while(balance > 0)
-	{
-		if( balance/arabiansArray[count] == 0) 
-		{
-			count--; continue;
-		}
-		  flag = false;
-	 for (int i = 0; i < 3; i++)
-		  {
-			  for (int j = 0; j < 2; j++)
-	 if ((count == 2*i + j)&& (balance >= arabiansArray[2*i + j + 1] - arabiansArray[2*i] ))
-	           { 
-			   flag = true; str[count1] = tableRomans[2*i] ;  
-			   str[count1 + 1] = tableRomans[2*i + j + 1] ;count1 += 2;count -= j + 1;
-			   balance -= arabiansArray[2*i + j + 1] - arabiansArray[2*i];
-			   break;
-	           }
-	           if (flag) break;
-	     }
-	if (flag) continue;
-	digit =  balance/arabiansArray[count];
-	  for (int i = 0; i < digit; i++)
-	        {
-				str[count1++] = tableRomans[count];
-		    }
-	  
-	    balance -= arabiansArray[count] * digit; count--;
-	
-	}
-char*str1 =	new char[count1 + 1 ];
-	for (int i = 0; i < count1; i++)
-	     {
-		str1[i] = str[i];
-	     }
-	str1[count1] = '\n';
-	return str1;
-            }
-	   
+	 
 	   
 	   
 	   RomansNumber operator + (const RomansNumber & rhs);
@@ -247,8 +191,10 @@ private:
 		static const char tableRomans[8]  ;
 	static const int arabiansArray[7];
 	 int  m_arabian;
-     };
-      const char RomansNumber::tableRomans[] = "IVXLCDM";
+    
+};
+     
+const char RomansNumber::tableRomans[] = "IVXLCDM";
 	 const int RomansNumber::arabiansArray[] = {1, 5, 10, 50, 100, 500, 1000};
 	RomansNumber RomansNumber::operator + (const RomansNumber & rhs)
 	{
@@ -337,15 +283,16 @@ private:
 		
 		
 			ostream& operator<<(ostream& stream, const RomansNumber& rhs)
-   {
+   {char*  paramArray = new char [50];
 	   int length = 1;
 	   
-	 char*str = RomansNumber::ConvertToRomans(rhs.m_arabian, length);
+	 RomansNumber::ConvertToRomans(rhs.m_arabian, length,paramArray);
 	   
 	 for (int i = 0;i <length ;i++)
-      stream << str[i];
-      return stream ;
-   }
+      stream <<  paramArray[i];
+      delete[] paramArray;
+	 return stream ;
+    }
     
 	
 		
@@ -372,11 +319,7 @@ private:
 		RomansNumber r1("XV");
 		cout<<r.ConvertToArabian("XXIX")<<endl; 
 		  int  length = 1;
-		char *str = r.ConvertToRomans(3999, length);
-    
-		for (int i = 0; i < length; i++)
 		
-		   cout<< str[i];
     cout<<endl; 
 	RomansNumber r2 =r1+r;
 	   r1 =r++;
