@@ -9,9 +9,9 @@
 
 
 #include "stdafx.h"
-#include "iostream"
+#include <iostream>
 
-#include "cstring"
+#include <cstring>
 
 using namespace std;
 
@@ -23,7 +23,7 @@ public:
 	~String()
 	{
          for (int i = 0;i < count; i++)	
-			 if (m_string == staticCharArray[i])
+			 if (m_string == &staticCharArray[i])
 			 {
                      if(--staticCountArray[i]==0) delete[] staticCharArray[i]; 
 			 }
@@ -38,7 +38,7 @@ private:
 static int count;
 static bool flag;
 static int staticCountArray[100];
-char*m_string;
+char**m_string;
 //int m_length;
 };
 String::String ( char *  str)
@@ -50,34 +50,45 @@ String::String ( char *  str)
 	for (int i = 0;i < count; i++)	
 	  if (strcmp (str, staticCharArray[i] )==0)
 		  {
-			  str = staticCharArray[i];staticCountArray[i]++; flag = true;break;
+			 m_string  = &staticCharArray[i];staticCountArray[i]++; flag = true;break;
 	      }
 			  
 	      
 	 if (!flag)
 	  {
-		  staticCharArray[count] = str; staticCountArray[count++]++;
-	  }	   
+		  staticCharArray[count] = str; 
+		  m_string = &staticCharArray[count];
+		  staticCountArray[count++]++;
+	  
+	 }	   
 	
 }
 
 String& String::operator = (const String& rhs)
-{
-	if(this == &rhs) 
+{int pos;
+	if((this == &rhs) ||(rhs.m_string == m_string))
 		return *this;
+	
+	for (int i = 0;i < count; i++)
+	if( m_string == &staticCharArray[i]) 
+	{
+		staticCountArray[i]--;pos = i;
+	}
 	for (int i = 0;i < count; i++)	
 	 // if (strcmp (rhs.m_string, staticCharArray[i] )==0)
-		  if (rhs.m_string == staticCharArray[i]) 
-		  {
-			  m_string = staticCharArray[i];staticCountArray[i]++; return *this;
+		  if (rhs.m_string == &staticCharArray[i]) 
+		{ 
+			m_string = &staticCharArray[i];staticCountArray[i]++; 
+	break;
 	      }
-//return *this;
-
+		if(	staticCountArray[pos]  == 0) delete[] staticCharArray[pos];
+		 
+return *this;
 }
 
 char*String::getString() const
 {
-	return m_string;
+	return *m_string;
 }
 	/*int String::getLength() const
  {
