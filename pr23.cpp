@@ -19,15 +19,13 @@ using namespace std;
     public:
 	   
 		
-		RomansNumber(const char* str)  
+		RomansNumber(const char* str): 
+		m_arabian( ConvertToArabian(str))
 		{
-
-	 m_arabian = ConvertToArabian(str);
-	  
-		}
-	RomansNumber()
+        }
+	RomansNumber():
+	m_arabian(1)
 	{
-		
 	}
 	  
 	RomansNumber(int arabian):
@@ -89,7 +87,7 @@ m_arabian(arabian)
 	
 	}
 	
-	   static void ConvertToRomans(int number, int& rLength, char*& paramArray) 
+	   static void ConvertToRomans(int number, int& rLength, char* paramArray) 
 	 {
 		bool flag = false;
 		char str[50]  ;
@@ -283,16 +281,17 @@ const char RomansNumber::tableRomans[] = "IVXLCDM";
 		
 		
 			ostream& operator<<(ostream& stream, const RomansNumber& rhs)
-   {char*  paramArray = new char [50];
+   {
+	   char  paramArray [50];
 	   int length = 1;
 	   
 	 RomansNumber::ConvertToRomans(rhs.m_arabian, length,paramArray);
 	   
 	 for (int i = 0;i <length ;i++)
       stream <<  paramArray[i];
-      delete[] paramArray;
-	 return stream ;
-    }
+      return stream ;
+    
+			}
     
 	
 		
@@ -327,7 +326,7 @@ const char RomansNumber::tableRomans[] = "IVXLCDM";
 	   cout<<r1<<endl;
 	   cout<<r<<endl;
 	   //assert(r <= r1);
-	 cout<<"11111111111111111111111111111111111111111111111"<<endl;
+	
 	   return 0;
 	
 		
