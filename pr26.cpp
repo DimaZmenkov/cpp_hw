@@ -36,7 +36,7 @@ public:
        cout<<"print" <<endl;
 	}
 
-void GetStatus() const
+void GetStatus() const override
 {
 	cout<<"printer" <<endl;
 }
@@ -50,7 +50,7 @@ public:
 	  {
        cout<<"scan"<<endl;
 	  }
-   void GetStatus() const
+   void GetStatus() const override
 {
 	cout<<"Scanner" <<endl;
 }
@@ -65,7 +65,7 @@ class MFU: public Printer, Scanner
 	 {
 	 }
 	
-	void GetStatus() const
+	void GetStatus() const override
 {
 	cout<<"MFU" <<endl;
 }
@@ -91,6 +91,9 @@ int _tmain(int argc, _TCHAR* argv[])
    scanner.TurnOff();
    printer.TurnOff();
     mfu.TurnOff();
+   delete pDevice1;
+	delete pDevice2;
+	delete pDevice3;
    return 0;
 }
 
