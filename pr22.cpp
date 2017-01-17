@@ -7,6 +7,15 @@
 // ConsoleApplication48.cpp: определяет точку входа для консольного приложения.
 //
 
+// ConsoleApplication82.cpp: определяет точку входа для консольного приложения.
+//
+
+// ConsoleApplication49.cpp: определяет точку входа для консольного приложения.
+//
+
+// ConsoleApplication48.cpp: определяет точку входа для консольного приложения.
+//
+
 
 #include "stdafx.h"
 #include <iostream>
@@ -24,20 +33,33 @@ public:
 	String ( char*  str);
 	~String()
 	{
-         for (int i = 0;i < count; i++)	
-			 if (m_string == staticCharArray[i])
-			   {
-                     if(--staticCountArray[i]==0)
-					 { 
+		//(*m_refCounter)--;
+		//if(	* m_refCounter  == 0) 
+	
 						 //delete[] staticCharArray[i]; 
-			 for (int j = i;j < count - 1; j++)
+			  for (int i = 0;i < count; i++)	
+			  if(staticCountArray[i] > 0)
+				 if(m_string == staticCharArray[i])
+			   {
+				   
+                     if(--staticCountArray[i]==0)
+					if( m_string)
+	{
+	delete[]  m_string;
+	   m_string =  0;
+		}
+				break;		 
+				 }			 /*{ 
+							 
+							 
+							 for (int j = i;j < count - 1; j++)
 			{ 
 				staticCharArray[j] = staticCharArray[j + 1];
 			 staticCountArray[j] = staticCountArray[j + 1];
 			}
 			 count--;   
-					 }
-			   }
+					 }*/
+			  // }
 
 	}
 	//inline int GetLength() const;
@@ -75,39 +97,58 @@ public:
 	 String& operator = (const String& rhs);
 	char* getString() const; 
 
-	const 
-		char&  operator [](int pos) const
+	const char&  operator [](int pos) const
 {
 	return m_string [pos];
 }
+	friend ostream& operator<<(ostream& stream, const String & rhs)
+   {
+	  
+	   if(rhs.m_string)
+	  for (int i = 0;i <rhs.m_length ; i++)
+			  stream << rhs[i];
+	   else cout <<"string is not exist"<< endl; 
+
+	   return stream ;
+   }
 private:
 	static char* staticCharArray[100];
 static int count;
 static bool flag;
-static int staticCountArray[100];
+static size_t staticCountArray[100];
 char*m_string;
 int m_length;
+ size_t* m_refCounter;
+
 };
 String::String ( char *  str):
 
-	
+	//m_string(new char[strlen(str)+1]),
 m_length(strlen(str))
 {
 	bool flag = false;
 	for (int i = 0;i < count; i++)	
-	  if (strcmp (str, staticCharArray[i] )==0)
-		  {
-			 m_string  = staticCharArray[i];staticCountArray[i]++; flag = true;break;
+	  if(staticCountArray[i] > 0) 
+		  if (strcmp (str, staticCharArray[i] )==0)
+		  { 
+			  m_refCounter = &staticCountArray[i];
+			 m_string  = staticCharArray[i];
+			// (* m_refCounter)++;
+			 staticCountArray[i]++; 
+			 flag = true;break;
 	      }
 			  
 	      
 	 if (!flag)
 	  {
-		  //staticCharArray[count]= new char[m_length];
-		  staticCharArray[count] = str; 
-		  m_string = staticCharArray[count];
-		  staticCountArray[count]++;
-	  count++;
+		  m_string= new char[strlen(str)+1];
+		 // staticCharArray[count]= new char[m_length];
+		  strcpy_s(m_string, m_length + 1, str);
+		  staticCharArray[count] = m_string ; 
+		 // m_string = staticCharArray[count];
+		  m_refCounter = &staticCountArray[count];
+		  staticCountArray[count++]++;
+	  //count++;
 	 }	   
 	
 }
@@ -119,26 +160,32 @@ String& String::operator = (const String& rhs)
 		return *this;
 	
 	for (int i = 0;i < count; i++)
-	if( m_string == staticCharArray[i])
+	 if(staticCountArray[i] > 0)
+		if( m_string == staticCharArray[i])
 	{
 		staticCountArray[i]--;pos = i;break;
 	}
-	if(	staticCountArray[pos]  == 0) 
-	{
-		//delete[] staticCharArray[pos];
-	 for (int j = pos;j < count - 1; j++)
+	//(* m_refCounter)--;
+		if(	* m_refCounter  == 0) 
+	if( m_string)
+		
+		
+		delete[] m_string;
+	 /*for (int j = pos;j < count - 1; j++)
 			{ 
 				staticCharArray[j] = staticCharArray[j + 1];
 			 staticCountArray[j] = staticCountArray[j + 1];
 			}
-	 count--;
-	} 
+	 count--;*/
+	 
 	for (int i = 0;i < count; i++)	
 	 // if (strcmp (rhs.m_string, staticCharArray[i] )==0)
-		  if (rhs.m_string == staticCharArray[i]) 
+		   if(staticCountArray[i] > 0)
+		 if (rhs.m_string == staticCharArray[i]) 
 		{ 
 			m_string = staticCharArray[i];staticCountArray[i]++; 
-	break;
+	m_refCounter = &staticCountArray[i];
+			break;
 	      }
 		
 	
@@ -156,7 +203,7 @@ char*String::getString() const
 char* String::staticCharArray[100];
 int String:: count;
 bool String::flag;
-int String::staticCountArray[100];
+size_t String::staticCountArray[100];
 int _tmain(int argc, _TCHAR* argv[])
 {
  String str1("123");
@@ -174,6 +221,14 @@ assert(str3 < str4);
 	assert(str4 > str3);
 	assert(str4 > str3);
 	assert(str3 < str5);
+	
+	cout << str3<<endl;
+	char* str = new char[3];
+String s(str);
+delete str;
+cout <<s<< endl; //???
+	
 	return 0;
 }
+
 
