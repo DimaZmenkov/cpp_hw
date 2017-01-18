@@ -1,3 +1,8 @@
+#include "stdafx.h"
+#include <iostream>
+#include<cassert>
+#include <string>
+#include <fstream>
 #include <vector>
 #include <map>
 using namespace std;
@@ -19,12 +24,14 @@ int _tmain(int argc, _TCHAR* argv[])
 		}
 		if(!flag) continue;	
 		
-		//cout<<word<<endl;
-	words[word]++;
+		
+	++words[word];
 	}
 	for(auto it = words.rbegin();it != words.rend(); ++it)
-	cout<<(*it).first<<" "<<(*it).second<<endl;
-	vector<string> vect2;
+	cout<<(*it).first<<" "<<--(*it).second<<endl;
+	
 
  return 0;
 }
+
+
