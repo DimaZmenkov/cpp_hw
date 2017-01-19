@@ -41,10 +41,8 @@ int _tmain(int argc, _TCHAR* argv[])
  
 	for(auto it = words1.rbegin();it != words1.rend(); ++it)
 	{
-		
 		cout<<(*it).second<<" "<<(*it).first<<endl;
-		
-	count++;
+		count++;
 	if (count >= 10) break;
 	}
 	return 0;
