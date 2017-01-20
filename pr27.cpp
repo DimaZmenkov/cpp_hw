@@ -1,3 +1,6 @@
+// ConsoleApplication116.cpp: определяет точку входа для консольного приложения.
+//
+
 #include "stdafx.h"
 #include <iostream>
 #include<cassert>
@@ -14,8 +17,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	string word;
 	size_t pos;
 	int i;
+	int difference = 'a' - 'A';
 	map<string, int> words;
-	map<int, string> words1;
+	multimap<int, string> words1;
 	while(file>>word)
 	{
 		bool flag = true; 
@@ -28,15 +32,20 @@ int _tmain(int argc, _TCHAR* argv[])
 		if(!flag) continue;	
 		pos = word.length()-1;
 		if(!((word[pos] >= 'A')&&(word[pos]<= 'Z')||(word[pos]>= 'a')&&(word[pos]<= 'z')))  
-			word.erase(pos,1);
-		
-	++words[word]; 
+			{
+				word.erase(pos,1);
+				pos--;
+		    }
+		for(int j = 0; j < pos + 1; j++)
+	if(word[j] <= 'Z')
+		word[j] += difference;
+			++words[word]; 
 	
 	}
 	int count = 0;
 	for(auto it = words.begin();it != words.end(); ++it)
 	{
-		words1[(*it).second] = (*it).first;
+		words1.insert( pair<int, string>((*it).second, (*it).first) );
 		}
  
 	for(auto it = words1.rbegin();it != words1.rend(); ++it)
@@ -47,5 +56,6 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 	return 0;
 }
+
 
 
