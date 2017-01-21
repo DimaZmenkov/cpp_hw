@@ -178,13 +178,16 @@ m_arabian(arabian)
 	 
 	 
 	 
-	 // explicit  operator int() const
+	 // explicit  
+		  operator 
+		 int () const
   //  {          without coomments compiler Visua Studio returned message:
 	//	Ошибка	1	error C2071: RomansNumber::operator int: недопустимый класс хранения	c:\users\user\documents\visual studio 2012\projects\consoleapplication91\consoleapplication91\consoleapplication91.cpp	212	1	ConsoleApplication91
 
-      
-	//	return m_arabian;   
-  //  } 
+    
+	  {
+		return m_arabian;   
+   } 
 private:
 		static const char tableRomans[8]  ;
 	static const int arabiansArray[7];
@@ -316,7 +319,7 @@ const char RomansNumber::tableRomans[] = "IVXLCDM";
 		RomansNumber r("XI");
 	    
 		RomansNumber r1("XV");
-		cout<<r.ConvertToArabian("XXIX")<<endl; 
+		cout<<RomansNumber::ConvertToArabian("XXIX")<<endl; 
 		  int  length = 1;
 		
     cout<<endl; 
@@ -326,7 +329,8 @@ const char RomansNumber::tableRomans[] = "IVXLCDM";
 	   cout<<r1<<endl;
 	   cout<<r<<endl;
 	   //assert(r <= r1);
-	
+	cout<< RomansNumber::ConvertToArabian("XXIX")<<endl;
+    cout<< static_cast<int>(RomansNumber("XXIX"))<<endl;
 	   return 0;
 	
 		
