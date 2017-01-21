@@ -1,3 +1,6 @@
+// ConsoleApplication118.cpp: определяет точку входа для консольного приложения.
+//
+
 // ConsoleApplication116.cpp: определяет точку входа для консольного приложения.
 //
 
@@ -38,7 +41,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		for(int j = 0; j < pos + 1; j++)
 	if(word[j] <= 'Z')
 		word[j] += difference;
-			if(unMap.count(word)!= 0) continue;
+			if(unMap.find(word) != unMap.end()) continue;
 		
 		++words[word]; 
 	
@@ -57,6 +60,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 	return 0;
 }
+
+
 
 
 
