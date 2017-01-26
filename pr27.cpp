@@ -15,7 +15,7 @@
 #include <utility>
 #include <set>
 #include <algorithm>
-
+//#define D_SCL_SECURE_NO_WARNINGS
 using namespace std;
 
 int _tmain(int argc, _TCHAR* argv[])
@@ -26,25 +26,35 @@ int _tmain(int argc, _TCHAR* argv[])
  
  set<string> testSet( str, str + 6);
  file.open("D:/test.txt");
-	string word;
-	const string test1 ="0123456789+-_";
+	string word,word1;
+	//const string test1 ="0123456789+-_";
 	size_t pos;
 	map<string, int> words;
 	multimap<int, string> words1;
 	while(file>>word)
     
 	{
+		//transform (word.begin(), word.end(), word.begin(), ::tolower, [](char ch) -> char
+		//{if  ((ch >= 'a')&&(ch <= 'z')||(ch =='+')) return ch;      } );
+		//Compiler write:
+		//Îøèáêà	2	error C4996: 'std::_Transform2': Function call with parameters that may be unsafe - this
+			//call relies on the caller to check that the passed values are correct. To disable this warning, 
+			//use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'	
+//c:\program files (x86)\microsoft visual studio 11.0\vc\include\algorithm	1207	1	ConsoleApplication126
+
+
 		transform (word.begin(), word.end(), word.begin(), ::tolower );
-	int	pos = word.length() ;
-		//for(int j = 0;j < pos;j++)
-		if(!((word[pos] >= 'a')&&(word[pos] <= 'z')||(word[pos]=='+')))
-		{word.erase(pos, 1);pos--;}
-				
-		   if(pos > 1)
-				if(!((word[pos] >= 'a')&&(word[pos] <= 'z')||(word[pos] == '+')))
-			word.erase(pos, 1);
-				if(!((word[0] >= 'a')&&(word[0] <= 'z')||(word[0] == '+')))
-			word.erase(0, 1);
+	int	pos = word.length() - 1 ;
+		
+		for (int j = 0; j < 3; j++)
+		{
+			if(j == 2) pos = 0;
+			if (pos >= 0)
+			if(!((word[pos] >= 'a')&&(word[pos] <= 'z')||(word[pos]=='+')))
+		   {
+			word.erase(pos, 1);pos--;
+		   }
+		}		
 		   if(binary_search(testSet.begin (), testSet.end(), word )) continue;
 			++words[word]; 
 	}
