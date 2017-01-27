@@ -22,18 +22,18 @@ int _tmain(int argc, _TCHAR* argv[])
 
 {
  ifstream file;
- string str[7] = { "I", "or", "and", "that", "the", "of", "not"};
- 
- set<string> testSet( str, str + 6);
+ //string str[7] = { "I", "or", "and", "that", "the", "of", "not"};
+ vector<string>str ;
+ str.push_back("I"); str.push_back( "or"); str.push_back("and"); str.push_back( "that"); 
+ str.push_back("the"); str.push_back("of"); str.push_back("not");
+ set<string> testSet( str.begin(), str.end());
  file.open("D:/test.txt");
-	string word,word1;
-	//const string test1 ="0123456789+-_";
-	size_t pos;
+	string word;
 	map<string, int> words;
 	multimap<int, string> words1;
+	int	pos;
 	while(file>>word)
-    
-	{
+    {
 		//transform (word.begin(), word.end(), word.begin(), ::tolower, [](char ch) -> char
 		//{if  ((ch >= 'a')&&(ch <= 'z')||(ch =='+')) return ch;      } );
 		//Compiler write:
@@ -41,21 +41,22 @@ int _tmain(int argc, _TCHAR* argv[])
 			//call relies on the caller to check that the passed values are correct. To disable this warning, 
 			//use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'	
 //c:\program files (x86)\microsoft visual studio 11.0\vc\include\algorithm	1207	1	ConsoleApplication126
-
-
-		transform (word.begin(), word.end(), word.begin(), ::tolower );
-	int	pos = word.length() - 1 ;
-		
+transform (word.begin(), word.end(), word.begin(), ::tolower );
+		pos = word.length() - 1 ;
 		for (int j = 0; j < 3; j++)
+		
 		{
 			if(j == 2) pos = 0;
 			if (pos >= 0)
-			if(!((word[pos] >= 'a')&&(word[pos] <= 'z')||(word[pos]=='+')))
+			if(!( isalpha(word[pos])||(word[pos]=='+')))
+			
 		   {
 			word.erase(pos, 1);pos--;
 		   }
+		
 		}		
-		   if(binary_search(testSet.begin (), testSet.end(), word )) continue;
+		   
+		if(binary_search(testSet.begin (), testSet.end(), word )) continue;
 			++words[word]; 
 	}
 
