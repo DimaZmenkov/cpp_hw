@@ -1,3 +1,6 @@
+// ConsoleApplication16.cpp: определяет точку входа для консольного приложения.
+//
+
 // ConsoleApplication118.cpp: определяет точку входа для консольного приложения.
 //
 
@@ -23,6 +26,16 @@ int _tmain(int argc, _TCHAR* argv[])
 {
  ifstream file;
  //string str[7] = { "I", "or", "and", "that", "the", "of", "not"};
+ //vector <string> str = {"I", "or", "and", "that", "the", "of"};
+ //Compiler write:
+// Ошибка	1	error C2552: str: инициализация не агрегированных данных с помощью списка 
+	// инициализации не допускается	c:\users\user\documents\visual studio 2012\projects\consoleapplication128\
+	 //consoleapplication128\consoleapplication128.cpp	29	1	ConsoleApplication128
+	 //	3	IntelliSense: инициализация объектов типа "std::vector<std::string, std::allocator<std::string>>" 
+		//с помощью выражения {...} не допускается	
+//c:\Users\User\Documents\Visual Studio 2012\Projects\ConsoleApplication128\
+ // ConsoleApplication128\ConsoleApplication128.cpp	29	24	ConsoleApplication128
+
  vector<string>str ;
  str.push_back("I"); str.push_back( "or"); str.push_back("and"); str.push_back( "that"); 
  str.push_back("the"); str.push_back("of"); str.push_back("not");
@@ -73,6 +86,10 @@ transform (word.begin(), word.end(), word.begin(), ::tolower );
 
 	return 0;
 }
+
+
+
+
 
 
 
