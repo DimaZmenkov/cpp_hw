@@ -71,25 +71,19 @@ private:
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+
+	int test;
 	stack<bool,5> stk;
-	stk.push(1);
-	stk.push(0);
-    stk.push(1);
-	stk.push(1);
-	stk.push(1);
-	stk.push(0);
-	cout<< stk.pop()<<endl;
-	cout<< stk.pop()<<endl;
-	cout<< stk.pop()<<endl;
-	cout<< stk.pop()<<endl;
-	cout<< stk.pop()<<endl;
-	cout<< stk.pop()<<endl;
-	stk.push(1);
-	stk.push(0);
-	cout<< stk.pop()<<endl;
-	stk.push(1);
-	cout<< stk.pop()<<endl;
-	cout<< stk.pop()<<endl;
+	const int quantity = 10;
+	for (int i = 0;i < quantity; i++)
+	{
+		test = rand()%2;
+	cout<<"push"<<test<<endl;
+	stk.push(test);
+	}
+	for (int i = 0;i < quantity; i++)
+		cout<<"pop"<<stk.pop()<<endl;
+	
 	return 0;
 }
 
