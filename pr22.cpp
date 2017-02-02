@@ -1,3 +1,5 @@
+
+
 // ConsoleApplication82.cpp: определяет точку входа для консольного приложения.
 //
 
@@ -30,37 +32,38 @@ class String
 
 
 public:
-	String ( char*  str);
+	String (const char*  str);
+	 String(const String& rhs)
+        : m_string(rhs.m_string)
+        , m_refCounter(rhs.m_refCounter)
+		, m_length(rhs.m_length)
+    {
+        (*m_refCounter)++;
+    }
+
 	~String()
 	{
-		//(*m_refCounter)--;
-		//if(	* m_refCounter  == 0) 
-	
-						 //delete[] staticCharArray[i]; 
-			  for (int i = 0;i < count; i++)	
-			  if(staticCountArray[i] > 0)
-				 if(m_string == staticCharArray[i])
-			   {
-				   
-                     if(--staticCountArray[i]==0)
-					if( m_string)
-	{
-	delete[]  m_string;
-	   m_string =  0;
-		}
-				break;		 
-				 }			 /*{ 
-							 
-							 
-							 for (int j = i;j < count - 1; j++)
-			{ 
-				staticCharArray[j] = staticCharArray[j + 1];
-			 staticCountArray[j] = staticCountArray[j + 1];
-			}
-			 count--;   
-					 }*/
-			  // }
+		  (*m_refCounter)--;
 
+        if(*m_refCounter == 0)
+        {
+            if (m_string)
+            {
+                delete[] m_string;
+               m_string  = nullptr;
+            }
+        }
+    }
+				
+	size_t count() const
+    {
+        return *m_refCounter;
+    }
+	void set_elem(int pos, char c)
+	{
+	if(m_string [pos] != c)  *m_refCounter = 1;
+		m_string [pos] = c;
+	
 	}
 	//inline int GetLength() const;
 	
@@ -97,10 +100,15 @@ public:
 	 String& operator = (const String& rhs);
 	char* getString() const; 
 
+	/*const char&  operator [](int pos) const
+{
+	return m_string [pos];
+}*/
 	const char&  operator [](int pos) const
 {
 	return m_string [pos];
 }
+	
 	friend ostream& operator<<(ostream& stream, const String & rhs)
    {
 	  
@@ -112,123 +120,89 @@ public:
 	   return stream ;
    }
 private:
-	static char* staticCharArray[100];
-static int count;
-static bool flag;
-static size_t staticCountArray[100];
+	//static char* staticCharArray[100];
+//static int count;
+//static bool flag;
+//static size_t staticCountArray[100];
 char*m_string;
 int m_length;
  size_t* m_refCounter;
 
 };
-String::String ( char *  str):
-
-	//m_string(new char[strlen(str)+1]),
-m_length(strlen(str))
-{
-	bool flag = false;
-	for (int i = 0;i < count; i++)	
-	  if(staticCountArray[i] > 0) 
-		  if (strcmp (str, staticCharArray[i] )==0)
-		  { 
-			  m_refCounter = &staticCountArray[i];
-			 m_string  = staticCharArray[i];
-			// (* m_refCounter)++;
-			 staticCountArray[i]++; 
-			 flag = true;break;
-	      }
-			  
+String:: String(const char* value)
+        : m_string(new char[strlen(value)+1])
+		, m_refCounter(new size_t(0))
+        , m_length(strlen(value))
+    {
+        strcpy_s(m_string, m_length + 1, value);
+        (*m_refCounter)++;
+    }
 	      
-	 if (!flag)
-	  {
-		  m_string= new char[strlen(str)+1];
-		 // staticCharArray[count]= new char[m_length];
-		  strcpy_s(m_string, m_length + 1, str);
-		  staticCharArray[count] = m_string ; 
-		 // m_string = staticCharArray[count];
-		  m_refCounter = &staticCountArray[count];
-		  staticCountArray[count++]++;
-	  //count++;
-	 }	   
-	
-}
-
-String& String::operator = (const String& rhs)
-{
-	int pos;
-	if((this == &rhs) ||(rhs.m_string == m_string))
-		return *this;
-	
-	for (int i = 0;i < count; i++)
-	 if(staticCountArray[i] > 0)
-		if( m_string == staticCharArray[i])
-	{
-		staticCountArray[i]--;pos = i;break;
-	}
-	//(* m_refCounter)--;
-		if(	* m_refCounter  == 0) 
-	if( m_string)
-		
-		
-		delete[] m_string;
-	 /*for (int j = pos;j < count - 1; j++)
-			{ 
-				staticCharArray[j] = staticCharArray[j + 1];
-			 staticCountArray[j] = staticCountArray[j + 1];
-			}
-	 count--;*/
 	 
-	for (int i = 0;i < count; i++)	
-	 // if (strcmp (rhs.m_string, staticCharArray[i] )==0)
-		   if(staticCountArray[i] > 0)
-		 if (rhs.m_string == staticCharArray[i]) 
-		{ 
-			m_string = staticCharArray[i];staticCountArray[i]++; 
-	m_refCounter = &staticCountArray[i];
-			break;
-	      }
-		
 	
-return *this;
-}
+
+
+ String& String::operator = ( const String& rhs)
+
+ {
+	m_string = rhs.m_string;
+         m_refCounter = rhs.m_refCounter;
+		m_length = rhs.m_length;
+	(*m_refCounter)++;
+	return *this;
+ }
 
 char*String::getString() const
 {
 	return m_string;
 }
-	/*int String::getLength() const
- {
-	 return m_length;
-}*/
-char* String::staticCharArray[100];
-int String:: count;
-bool String::flag;
-size_t String::staticCountArray[100];
+	
 int _tmain(int argc, _TCHAR* argv[])
 {
- String str1("123");
-	String str2("111");
-	str2= str1;
-	String str3("124");
-	String str4("126");
-	String str5("1231");
-	str3 =str1;
-	//for (int i = 0;i < str1.count; i++)	
-	//cout<<str1.staticCountArray[i]<<endl;
-		cout<<str3[2]<<endl;
-assert(str2 == str1);
-assert(str3 < str4);
-	assert(str4 > str3);
-	assert(str4 > str3);
-	assert(str3 < str5);
-	
-	cout << str3<<endl;
-	char* str = new char[3];
-String s(str);
-delete str;
-cout <<s<< endl; //???
-	
+ 
+	 String s("abc");
+    assert(s.count()==1);
+
+    {
+        String s2 = s;
+        assert(s.count()==2);
+        assert(s2.count()==2);
+    }
+	//=====
+    assert(s.count()==1);
+
+    String s3 = s;
+    assert(s.count()==2);
+    s3.set_elem(0, 'X');
+    assert(s.count()==1);
+    assert(s3.count()==1);
+    
+    
+    cout << "PASSED" << endl;
 	return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
