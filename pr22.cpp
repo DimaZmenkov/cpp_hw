@@ -80,7 +80,17 @@ public:
 		 return true;
 	 
 	 }
-	 
+	 String& operator=(const char* value)
+    {
+		if(m_string)
+		 delete[] m_string;
+		 m_string = new char[strlen(value)+1];
+         
+		 *m_refCounter = 1;
+		m_length = strlen(value) ;
+	strcpy_s(m_string, m_length + 1, value);
+		return *this;
+    }
 	  bool operator == (const  String & rhs)
 	  {
          return m_string == rhs.m_string;
@@ -161,7 +171,10 @@ int _tmain(int argc, _TCHAR* argv[])
 {
  
 	 String s("abc");
-    assert(s.count()==1);
+    
+	 
+	 
+	 assert(s.count()==1);
 
     {
         String s2 = s;
@@ -177,7 +190,7 @@ int _tmain(int argc, _TCHAR* argv[])
     assert(s.count()==1);
     assert(s3.count()==1);
     
-    
+   
     cout << "PASSED" << endl;
 	return 0;
 }
