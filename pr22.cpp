@@ -57,7 +57,7 @@ public:
 				
 	size_t count() const
     {
-        return *m_refCounter;
+        return    *m_refCounter;
     }
 	void set_elem(int pos, char c)
 	{
