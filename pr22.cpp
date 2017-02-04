@@ -26,7 +26,7 @@
 
 using namespace std;
 
-class String 
+struct String 
 { 
 	
 
@@ -51,7 +51,9 @@ public:
             {
                 delete[] m_string;
                m_string  = nullptr;
-            }
+            delete m_refCounter;
+			m_refCounter = nullptr;
+			}
         }
     }
 				
@@ -61,11 +63,32 @@ public:
     }
 	void set_elem(int pos, char c)
 	{
-	if(m_string [pos] != c)  *m_refCounter = 1;
-		m_string [pos] = c;
 	
+		if(m_string [pos] != c)  
+			{
+				char* temp = new char[m_length + 1];
+		strcpy_s(temp, m_length + 1, m_string);
+				temp[pos] = c;
+		(*m_refCounter) --;
+		 if(*m_refCounter == 0)
+        
+            if (m_string)
+            {
+                delete[] m_string;
+              
+            delete m_refCounter;
+			
+			
+			}
+		 m_string = new char[m_length + 1] ;
+			m_refCounter = new size_t(0);
+			swap(m_string, temp);
+			 delete[] temp;
+			(*m_refCounter)++ ;
+			
+		    }
 	}
-	//inline int GetLength() const;
+	
 	
 	 bool operator < (const  String & rhs)
 	  {
@@ -82,13 +105,20 @@ public:
 	 }
 	 String& operator=(const char* value)
     {
+		(*m_refCounter)--;
+		if(m_refCounter == 0)
 		if(m_string)
-		 delete[] m_string;
-		 m_string = new char[strlen(value)+1];
-         
-		 *m_refCounter = 1;
+		 {
+			 delete[] m_string;
+		
+		  delete m_refCounter;
+		
+		}
+         m_refCounter = new size_t(0);
+		 (*m_refCounter)++;
 		m_length = strlen(value) ;
-	strcpy_s(m_string, m_length + 1, value);
+	 m_string = new char[strlen(value) + 1];
+		strcpy_s(m_string, m_length + 1, value);
 		return *this;
     }
 	  bool operator == (const  String & rhs)
@@ -110,10 +140,7 @@ public:
 	 String& operator = (const String& rhs);
 	char* getString() const; 
 
-	/*const char&  operator [](int pos) const
-{
-	return m_string [pos];
-}*/
+	
 	const char&  operator [](int pos) const
 {
 	return m_string [pos];
@@ -130,10 +157,7 @@ public:
 	   return stream ;
    }
 private:
-	//static char* staticCharArray[100];
-//static int count;
-//static bool flag;
-//static size_t staticCountArray[100];
+	
 char*m_string;
 int m_length;
  size_t* m_refCounter;
@@ -155,7 +179,16 @@ String:: String(const char* value)
  String& String::operator = ( const String& rhs)
 
  {
-	m_string = rhs.m_string;
+	if(--(*m_refCounter) == 0)
+	 if (m_string)
+            {
+                delete[] m_string;
+	      m_string = new char[strlen(rhs.m_string) + 1];
+	 delete m_refCounter;
+	 m_refCounter = new size_t(0);
+	        }	
+	 
+	 m_string = rhs.m_string;
          m_refCounter = rhs.m_refCounter;
 		m_length = rhs.m_length;
 	(*m_refCounter)++;
@@ -181,14 +214,17 @@ int _tmain(int argc, _TCHAR* argv[])
         assert(s.count()==2);
         assert(s2.count()==2);
     }
-	//=====
+	
     assert(s.count()==1);
 
     String s3 = s;
     assert(s.count()==2);
-    s3.set_elem(0, 'X');
-    assert(s.count()==1);
+     assert(s3.count()==2);
+	
+	 s3.set_elem(0, 'X');
     assert(s3.count()==1);
+	 assert(s.count()==1);
+    
     
    
     cout << "PASSED" << endl;
