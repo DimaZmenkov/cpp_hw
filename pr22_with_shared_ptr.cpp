@@ -54,7 +54,8 @@ public:
 				if( temp[pos] != c)
 			{
 				char*  string1 = new char[m_length + 1];
-			strcpy_s(string1, m_length + 1, temp);
+			swap(*string1, *temp);
+				//strcpy_s(string1, m_length + 1, temp);
 			string1[pos] = c;
 	shared_ptr<char>(new char[m_length  + 1]);
 		m_string.reset( string1);
@@ -92,7 +93,8 @@ public:
 		
 		m_length = strlen(value) ;
 	char* string1 = new char[strlen(value) + 1];
-		strcpy_s(string1, m_length + 1, value);
+		swap(*string1, *const_cast<char*>(value));
+	//strcpy_s(string1, m_length + 1, value);
 		shared_ptr<char>(new char[strlen(value) + 1]);
 		m_string.reset( string1);
 		return *this;
@@ -196,6 +198,7 @@ int _tmain(int argc, _TCHAR* argv[])
     assert(s.count()==2);
      assert(s3.count()==2);
 	
+	 
 	 s3.set_elem(0, 'X');
     assert(s3.count()==1);
 	 assert(s.count()==1);
