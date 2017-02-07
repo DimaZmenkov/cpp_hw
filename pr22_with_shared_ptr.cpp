@@ -24,6 +24,8 @@
 #include<cassert>
 #include <cstring>
 #include <memory>
+#include <type_traits>
+
 using namespace std;
 
 class String 
@@ -35,7 +37,7 @@ public:
 	String (const char*  str);
 	 String(const String& rhs): 
 		 m_string(rhs.m_string)
-      ,   m_length(rhs.m_length)
+      //,   m_length(rhs.m_length)
     {
     }
 
@@ -47,7 +49,7 @@ public:
     {
         return m_string.use_count() ;   
     }
-	void set_elem(int pos, char c)
+	/*void set_elem(int pos, char c)
 	{
 	char* temp = 
 		 m_string.get();
@@ -68,35 +70,39 @@ public:
 		
 			
 		   
-	}
+	}*/
 	
-	
+	void set_elem(int pos, char c)
+    {
+        if( m_string.get()[pos] != c)
+        {
+            String(m_string.get()).swap(*this);
+            m_string.get()[pos] = c;
+        }
+    }
+
+
+
+    void swap (String& rhs) //noexcept 
+		//Ошибка	1	error C3646: noexcept: неизвестный спецификатор переопределения	
+//c:\users\user\documents\visual studio 2012\projects\consoleapplication143\
+//consoleapplication143\consoleapplication143.cpp	87	1	ConsoleApplication143
+
+    {
+        ::swap(m_string, rhs.m_string);
+      // ::swap(m_length, rhs.m_length);
+    }
 	 bool operator < (const  String & rhs)
 	  {
-		 size_t min, count = 0;
-		char*  string1 = 
-		 m_string.get();
-		char*  string2 = 
-		rhs.m_string.get();
-		if(m_length < rhs.m_length) min =  m_length; else min = rhs.m_length;
-		 for (int i = 0;i < m_length; i++)	
-	{
-		if (string1[i] > string2[i]) return false;
-		 if (string1[i] ==  string2[i]) count++;
-    }
-	if((m_length >= rhs.m_length)&&(count == m_length)) return false;
-		 return true;
-	 
+		 
+	 return strcmp(m_string.get(), rhs.m_string.get()) < 0; 
 	 }
 	 String& operator=(const char* value)
     {
+		if(strcmp(m_string.get(), value) != 0)
+		//m_length = strlen(value) ;
+	      String(value).swap(*this);
 		
-		m_length = strlen(value) ;
-	char* string1 = new char[strlen(value) + 1];
-		swap(*string1, *const_cast<char*>(value));
-	//strcpy_s(string1, m_length + 1, value);
-		shared_ptr<char>(new char[strlen(value) + 1]);
-		m_string.reset( string1);
 		return *this;
     }
 	  bool operator == (const  String & rhs)
@@ -121,16 +127,17 @@ public:
 	
 	const char&  operator [](int pos) const
 {
-	char* string1 = 
-		 m_string.get();
-	return string1[pos] ;
-}
+	//char* string1 = 
+		// m_string.get();
+	//return string1[pos] ;
+	return m_string.get()[pos] ;
+	}
 	
 	friend ostream& operator<<(ostream& stream, const String & rhs)
    {
 	  
 	   if(rhs.m_string)
-	  for (int i = 0;i <rhs.m_length ; i++)
+	  for (int i = 0;i <strlen(rhs.m_string.get()) ; i++)
 			  stream << rhs[i];
 	   else cout <<"string is not exist"<< endl; 
 
@@ -139,23 +146,22 @@ public:
 private:
 	
 shared_ptr<char>m_string;
-int m_length;
+//int m_length;
 
 
 };
 String:: String(const char* value)
-        : 
-	m_length(strlen(value))
+	//: 
+	//m_length(strlen(value))
     {
       char* string1 = new char[strlen(value) + 1];
-		strcpy_s(string1, m_length + 1, value);
+		strcpy_s(string1,strlen(value) + 1, value);
 		
 		 shared_ptr<char>(new char[strlen(value) + 1]);
 		m_string.reset( string1);
 		
 	}
-	      
-	 
+	  
 	
 
 
@@ -166,15 +172,16 @@ String:: String(const char* value)
 	 
 	 m_string = rhs.m_string;
         
-		m_length = rhs.m_length;
+		//m_length = rhs.m_length;
 	
 	return *this;
  }
 
 char*String::getString() const
 {
-char* string1 = m_string.get();
-	return string1;
+//char* string1 = m_string.get();
+	//return string1;
+return m_string.get();
 }
 	
 int _tmain(int argc, _TCHAR* argv[])
