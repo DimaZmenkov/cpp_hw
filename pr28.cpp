@@ -3,9 +3,9 @@
 
 #include <iostream>
 
-//namespace my {
+namespace my {
 
-using namespace std;
+
 template<typename T>
 struct fwd_list_Node
 {
@@ -14,7 +14,7 @@ struct fwd_list_Node
 };
 
 
-template<typename T, typename RetT = T>
+template<typename T, typename RetT=T>
 struct fwd_list_iterator : public std::iterator<std::forward_iterator_tag, T>
 {
     fwd_list_iterator()
@@ -22,15 +22,14 @@ struct fwd_list_iterator : public std::iterator<std::forward_iterator_tag, T>
     {
     }
 
-    fwd_list_iterator(//my::
-                      fwd_list_Node<T>* ptr)
+    fwd_list_iterator(my::fwd_list_Node<T>* ptr)
         : m_current (ptr)
     {
     }
 
     RetT& operator*()
     {
-        return m_current -> data;
+        return m_current->data;
     }
 
     fwd_list_iterator& operator++()
@@ -46,14 +45,14 @@ struct fwd_list_iterator : public std::iterator<std::forward_iterator_tag, T>
         return tmp;
     }
 
-    bool operator == (const fwd_list_iterator& rhs)
+    bool operator==(const fwd_list_iterator& rhs)
     {
-        return m_current == rhs.m_current;
+        return m_current==rhs.m_current;
     }
 
-    bool operator != (const fwd_list_iterator& rhs)
+    bool operator!=(const fwd_list_iterator& rhs)
     {
-        return !(*this == rhs);
+        return !(*this==rhs);
     }
 
 private:
@@ -93,13 +92,13 @@ public:
         rhs.swap(*this);
     }
 
-    forward_list& operator = (const forward_list& rhs)
+    forward_list& operator=(const forward_list& rhs)
     {
         forward_list(rhs).swap(*this);
         return *this;
     }
 
-    forward_list& operator = (forward_list&& rhs)
+    forward_list& operator=(forward_list&& rhs)
     {
         forward_list(std::move(rhs)).swap(*this);
         return *this;
@@ -112,13 +111,13 @@ public:
 
     const T& front()
     {
-        return head -> data;
+        return head->data;
     }
 
     T pop_front()
     {
         T data = head->data;
-        fwd_list_Node<T>* tmp = head -> next;
+        fwd_list_Node<T>* tmp = head->next;
         delete head;
         head = tmp;
         return data;
@@ -126,7 +125,7 @@ public:
 
     bool empty()
     {
-        return head == nullptr;
+        return head==nullptr;
     }
 
     void push_front(const T& value)
@@ -149,23 +148,23 @@ public:
         head = tmp;
     }
 
-    void reverse()
+
+
+void reverse()
+{
+    fwd_list_Node<T>*new_head = nullptr;
+    //читаем элементы старого списка
+    for(fwd_list_Node<T>*pos=head;pos;)
     {
-
-        forward_list temp;
-
-       while(head)
-    {
-        temp.push_front(front());
-          head =  head ->next;
+        //пихаем в начало нового списка
+        fwd_list_Node<T>*save_next=pos->next;
+        pos->next=new_head;
+        new_head=pos;
+        pos=save_next;
     }
-
-            temp.swap(*this);
-
-
-
-
-    }
+    //финита ля комедия
+    head=new_head;
+}
 
     iterator begin()
     {
@@ -209,6 +208,10 @@ public:
 
 };
 
+
+
+
+
 template<typename T>
 struct list_Node
 {
@@ -226,7 +229,7 @@ struct list_iterator : public std::iterator<std::bidirectional_iterator_tag, T>
     {
     }
 
-    list_iterator(list_Node<T>* ptr)
+    list_iterator(my::list_Node<T>* ptr)
         : m_current (ptr)
     {
     }
@@ -262,14 +265,14 @@ struct list_iterator : public std::iterator<std::bidirectional_iterator_tag, T>
         return tmp;
     }
 
-    bool operator == (const list_iterator& rhs)
+    bool operator==(const list_iterator& rhs)
     {
-        return m_current == rhs.m_current;
+        return m_current==rhs.m_current;
     }
 
     bool operator!=(const list_iterator& rhs)
     {
-        return !(*this == rhs);
+        return !(*this==rhs);
     }
 
 private:
@@ -282,8 +285,8 @@ template<class T>
 class list
 {
 
-    list_Node<T>* //const
-    sentinel = new list_Node<T>{T(), nullptr, nullptr};
+    list_Node<T>* const
+     sentinel = new list_Node<T>{T(), nullptr, nullptr};
     list_Node<T>* head = sentinel;
     list_Node<T>* tail = sentinel;
 
@@ -296,8 +299,8 @@ class list
 
     void update_sentinel()
     {
-        tail -> next = sentinel;
-        sentinel -> prev = tail;
+        tail->next = sentinel;
+        sentinel->prev = tail;
     }
 
     void update_tail()
@@ -351,18 +354,18 @@ public:
 
     const T& front()
     {
-        return head -> data;
+        return head->data;
     }
 
     const T& back()
     {
-        return tail -> data;
+        return tail->data;
     }
 
     T pop_front()
     {
-        T data = head -> data;
-        list_Node<T>* tmp = head -> next;
+        T data = head->data;
+        list_Node<T>* tmp = head->next;
         delete head;
         head = tmp;
         update_tail();
@@ -372,11 +375,10 @@ public:
 
     T pop_back()
     {
-		T data = tail -> data;
-         list_Node<T>* tmp = tail -> prev;
+		T data = tail->data;
+         list_Node<T>* tmp = tail->prev;
     delete tail;
 	tail = tmp;
-
 	//update_tail();
         update_sentinel();
         return data;
@@ -384,32 +386,72 @@ public:
 
     void reverse()
     {
-       list temp;
-list_Node<T>* temp1;
-       while(head != tail )
-    {
-        list_Node<T>* temp1 = head;
-        temp1 = head;
+       list_Node<T>*new_head = nullptr;
 
-        temp.push_front(front());
-          head = head ->next;
+    list_Node<T>* tmp = tail;
+    //T value = front();
+
+    //читаем элементы старого списка
+    //list_Node<T>*new_tail = nullptr;
+//list_Node<T>*head1 =  head;
+
+    for(list_Node<T>*pos=head;pos;)
+    {
+        //пихаем в начало нового списка
+        list_Node<T>*save_next = pos->next;
+        pos->next=new_head;
+        new_head=pos;
+     // pos->next = pos->prev;
+       pos->prev =save_next;//->next;
+
+        pos=save_next;
+//pop_front();
+//push_front(value);
+    }
+//sentinel = head;
+tail = head;
+//tail->next = nullptr;
+    //финита ля комедия
+    head =new_head;
+//pop_front();
+//push_front(value);
+    head ->prev= tmp;
+    head =head ->prev;
+    head ->prev = nullptr;
+   tail-> next = nullptr;
+    //update_tail();
+        //update_sentinel();
 
     }
-//temp1 = head;
+ /*void    reverse()
+    {
+        if( head == nullptr )
+        {
+            return;
+        }
 
-temp.push_front(front());
+        for(;;)
+        {
+            std::swap
+                (
+                    head->prev,
+                    head->next
+                );
 
+           list_Node<T>*  prev1    =   head->prev;
 
+            if( prev1 == nullptr )
+            {
+                break;
+            }
 
-           temp.swap(*this);
-
-
-
-	}
+            head   =   prev1;
+        }//for
+    }*/
 
     bool empty()
     {
-        return head == sentinel;
+        return head==sentinel;
     }
 
     void push_front(const T& value)
@@ -417,33 +459,29 @@ temp.push_front(front());
         list_Node<T>* tmp = new list_Node<T>{value, nullptr, sentinel};
         if (head != sentinel)
         {
-            tmp -> next = head;
-            head -> prev = tmp;
+            tmp->next = head;
+            head->prev = tmp;
         }
         head = tmp;
         update_tail();
         update_sentinel();
+
     }
 
-    void push_back(const T& value)
+    void push_back(T value)
     {
-       list_Node<T>* tmp = new list_Node<T>{value, nullptr, sentinel };
-if (tail != sentinel)
-
-      {
-          tmp -> prev = tail;
-            tail -> next = tmp;
-        tail = tmp;
-      }
-else head = tmp;
+       list_Node<T>* tmp = new list_Node<T>{value, nullptr, sentinel};
 
 
+ if (tail != sentinel)
+            {
 
-        update_tail();
-        update_sentinel();
+            tail->next  = tmp;
+                tmp->prev = tail;
+            }
+            tail  =  tmp;
 
 	}
-
     iterator begin()
     {
         return iterator(head);
@@ -499,7 +537,7 @@ else head = tmp;
         while(head != sentinel)
         {
             list_Node<T>* tmp = head;
-            head = head -> next;
+            head = head->next;
             delete tmp;
         }
 
@@ -507,33 +545,71 @@ else head = tmp;
     }
 
 };
-
+}
 
 
 int main()
 {
+    using namespace my;
  forward_list<int> f;
  f.push_front(1); f.push_front(2);f.push_front(3);f.reverse();
- int p = f.pop_front();cout<<p<<endl;;
- p = f.pop_front();cout<<p<<endl;p = f.pop_front();cout<<p<<endl;
+ int p = f.pop_front();std::cout<<p<<std::endl;
+ p = f.pop_front();std::cout<<p<<std::endl;p = f.pop_front();std::cout<<p<<std::endl;
 list<int> f1;
-cout<<"list"<<endl;
+std::cout<<"list"<<std::endl;
 
- cout<<"list after push "<<endl;
- //f1.push_back(4);
-  //f1.push_front(1);f1.push_front(2); f1.push_front(3);
+ std::cout<<"list after push "<<std::endl;
 
 
-  f1.push_back(4);
-  f1.push_back(5);f1.push_back(3);
 
-// f1.push_front(4); f1.push_front(5);
-  p = f1.pop_back();cout<<p<<endl; p = f1.pop_back();cout<<p<<endl ;p = f1.pop_back();cout<<p<<endl;
-f1.push_front(4);
-  //f1.push_back(5);f1.push_back(3);
-  p = f1.pop_back();
-cout<<p<<endl;
- //cout<<"1111111111111";
+  f1.push_front(3);
+  f1.push_front(4);f1.push_front(5);f1.push_front(6); f1.push_front(7);
+  f1.reverse();
+
+
+  p = f1.pop_front();std::cout<<p<<std::endl;
+  p = f1.pop_front();std::cout<<p<<std::endl ;
+  p = f1.pop_front();std::cout<<p<<std::endl;
+  p = f1.pop_front(); std::cout<<p<<std::endl;
+  p = f1.pop_front();std::cout<<p<<std::endl;
+   f1.push_front(3);
+  f1.push_front(4);f1.push_front(5);f1.push_front(6); f1.push_front(7);
+   p = f1.pop_front();std::cout<<p<<std::endl;
+  p = f1.pop_front();std::cout<<p<<std::endl ;
+  p = f1.pop_front();std::cout<<p<<std::endl;
+  p = f1.pop_front(); std::cout<<p<<std::endl;
+ // p = f1.pop_front();std::cout<<p<<std::endl;
+  std::cout<<"111111111111111111111111111111"<<std::endl;
+/*f1.push_front(4);f1.push_front(5);f1.push_front(6); f1.push_front(7);
+p = f1.pop_back();std::cout<<p<<std::endl;
+p = f1.pop_back();std::cout<<p<<std::endl;
+p = f1.pop_back();std::cout<<p<<std::endl;
+p = f1.pop_back();std::cout<<p<<std::endl;
+//p = f1.pop_back();std::cout<<p<<std::endl;*/
+ std::cout<<"222222222222222222222222222222"<<std::endl;
+
+f1.push_back(3);
+  f1.push_back(4);f1.push_back(5);f1.push_back(6); f1.push_back(7);
+
+ p = f1.pop_back();std::cout<<p<<std::endl;
+  p = f1.pop_back();std::cout<<p<<std::endl ;
+  p = f1.pop_back();std::cout<<p<<std::endl;
+  p = f1.pop_back(); std::cout<<p<<std::endl;
+  p = f1.pop_back();std::cout<<p<<std::endl;
+
+
+
+/*p = f1.pop_back();std::cout<<p<<std::endl;
+p = f1.pop_back();std::cout<<p<<std::endl;
+p = f1.pop_back();std::cout<<p<<std::endl;
+p = f1.pop_back();std::cout<<p<<std::endl;
+p = f1.pop_back();std::cout<<p<<std::endl;
+
+//f1.push_front(1);
+
+  //p = f1.pop_back();
+//std::cout<<p<<std::endl;
+ //cout<<"1111111111111";*/
    return 0;
 //}
 
@@ -541,5 +617,5 @@ cout<<p<<endl;
 
 
 
-}
 
+}
