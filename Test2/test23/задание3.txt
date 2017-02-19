@@ -1,0 +1,1 @@
+проекты project_qt и project_qt_server не компилируются на qt 5.8 под windows
