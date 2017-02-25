@@ -7,12 +7,7 @@
 #include <thread>
 #include <mutex>
 using namespace std;
-//mutex g_lock_read;
-//mutex g_lock_write;
-//mutex g_lock;
-condition_variable g_queuecheck;
-bool flag_read;
-bool flag_write;
+
 template<typename T, size_t N>
 class RingBuffer
 {
@@ -24,12 +19,13 @@ class RingBuffer
     unsigned long long m_end = 0;
 
 public:
-mutex g_lock_read;
-mutex g_lock_write;
-//mutex g_lock;
+
+    mutex g_lock_read;
+    mutex g_lock_write;
+
     size_t size() const
     {
-        return 5;
+        return N;
     }
 
     size_t count() const
@@ -48,7 +44,7 @@ mutex g_lock_write;
         {
             if (m_start == m_end)
             {
-               result = true;
+                result = true;
             }
         }
 
@@ -57,8 +53,8 @@ mutex g_lock_write;
 
     bool full() const
     {
-      tSize  start = m_start % N;
-      tSize  end   = m_end % N;
+        tSize  start = m_start % N;
+        tSize  end   = m_end % N;
 
         bool result = false;
 
@@ -66,7 +62,7 @@ mutex g_lock_write;
         {
             if (m_start > m_end)
             {
-               result = true;
+                result = true;
             }
         }
 
@@ -75,110 +71,114 @@ mutex g_lock_write;
 
     void push_back(const int& elem)
     {
+        condition_variable g_queuecheck;
         cout<<"in push_back"<<endl;
         if (full())
-        //{
-           // throw out_of_range("Buffer is full");
-        //}
-{
 
-cout<<"full"<<endl;
+        {
 
-       std::unique_lock<std::mutex> locker(g_lock_write);     //}
+            cout<<"full"<<endl;
 
-flag_write = false;
-while(!flag_write)
-        g_queuecheck.wait(locker);
-\
-    }
-g_lock_write.lock();
+            std::unique_lock<std::mutex> locker(g_lock_write);     //}
+
+            //flag_write = false;
+            while(full())
+                g_queuecheck.wait(locker);
+            \
+        }
+        g_lock_write.lock();
         tSize start = m_start%N;
         m_data[start] = elem;
         ++m_start;
-    flag_read = true;
+        //flag_read = true;
 
-   g_queuecheck.notify_one();
-    g_lock_write.unlock();
+        g_queuecheck.notify_one();
+        g_lock_write.unlock();
     }
 
     T& front()
     {
+        condition_variable g_queuecheck;
         cout<<"in front"<<endl;
         if (empty())
-        //{
-           // throw out_of_range("Buffer is emtpy");
-       // }
- {
-      \
-       std::unique_lock<std::mutex> locker(g_lock_read);     //}
-cout<<"empty"<<endl;
-flag_read = false;
-while(!flag_read)
-        g_queuecheck.wait(locker);
+            //{
+            // throw out_of_range("Buffer is emtpy");
+            // }
+        {
+            \
+            std::unique_lock<std::mutex> locker(g_lock_read);     //}
+            cout<<"empty"<<endl;
+
+            while(empty())
+                g_queuecheck.wait(locker);
         }
         return m_data[m_end%N];
     }
 
     const T& front() const
     {
+        condition_variable g_queuecheck;
         if (empty())
-        //{
+            //{
             //throw out_of_range("Buffer is emtpy");
-        //}
- {
-cout<<"empty"<<endl;
+            //}
+        {
+            cout<<"empty"<<endl;
 
 
-flag_read = false;
-       {
-           std::unique_lock<std::mutex> locker(g_lock_read);
-  //}
-while(!flag_read)
-        g_queuecheck.wait(locker);
+
+            {
+                std::unique_lock<std::mutex> locker(g_lock_read);
+                //}
+                while(empty())
+                    g_queuecheck.wait(locker);
+            }
         }
-    }
 
         return m_data[m_end%5];
     }
 
     void pop_front()
     {
+        condition_variable g_queuecheck;
         cout<<"in pop_front"<<endl;
         if (empty())
         {
-            flag_read = false;
-           cout<<"in pop_front empty"<<endl;// throw out_of_range("Buffer is emtpy");
+
+            cout<<"in pop_front empty"<<endl;// throw out_of_range("Buffer is emtpy");
         }
-   else{
+        else
+        {
 
-g_lock_read.lock();
-        ++m_end;
-        flag_write = true;
+            g_lock_read.lock();
+            ++m_end;
 
-g_queuecheck.notify_one();
 
-g_lock_read.unlock();
-}
-}
+            g_queuecheck.notify_one();
+
+            g_lock_read.unlock();
+        }
+    }
 };
 void run()
 {
     cout<<"in run"<<endl;
- RingBuffer<int, 2>  rb;
+    RingBuffer<int, 2>  rb;
 
-rb.push_back(1);
-rb.front();
+    rb.push_back(1);
+    rb.front();
 
-rb.pop_front();
+    rb.pop_front();
 }
 
 int main()
 {
-    flag_write = true;  flag_read = true;
 
 
 
-     std::thread thr1(run);
+    //for(int i =0 ;i < 100; i++)
+    // {
+    std::thread thr1(run);
 
     std::thread thr2(run);
 
@@ -187,8 +187,9 @@ int main()
     thr2.join();
 
 
+    //}
 
-
-cout<<"11111111111111"<<endl;
-return 0;
+    //cout<<"11111111111111"<<endl;
+    return 0;
 }
+
