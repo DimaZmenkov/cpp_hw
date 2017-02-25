@@ -4,7 +4,7 @@
 #include <memory>
 #include <unordered_map>//unordered_
 #include<unordered_set>
-using namespace std;
+
 
 
 class Object;
@@ -14,9 +14,10 @@ class Object;
 class CallDispatcher
 {
 private:
- std::shared_ptr<CallDispatcher> m_dispatcher;
+    std::shared_ptr<CallDispatcher> m_dispatcher;
     //...
-  unordered_map < Object *, unordered_map<string ,unordered_map<Object *,unordered_set<string>>>> m_mult;
+   std:: unordered_map < Object *, std:: unordered_map< std::string , std::unordered_map<Object *,
+   std::unordered_set< std::string>>>> m_mult;
 
 
 public:
@@ -27,7 +28,7 @@ public:
     void connect(Object* sender, const std::string& singal, Object* receiver, const std::string& slot);
 
 
-void disconnect(Object* sender, const std::string& singal, Object* receiver, const std::string& slot);
+    void disconnect(Object* sender, const std::string& singal, Object* receiver, const std::string& slot);
 
     void sendSignal(Object* sender, const std::string& singal);
 };
