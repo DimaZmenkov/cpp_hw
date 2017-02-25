@@ -1,5 +1,5 @@
 #include "calldispatcher.h"
-
+#include "object.h"
 #include <iostream>
 #include <algorithm>
 /*bool Box::operator()(const Box& x, const Box& y) const
@@ -121,13 +121,13 @@ void CallDispatcher::sendSignal(Object *sender, const std::string& singal)
    { for(auto it3 = it2->second.begin();it3 != it2->second.end(); ++it3)
       {
                q =it2->first;
-               cout<<*it3<<endl;
+               //cout<<*it3<<endl;
 
 
 
                // q->dispatchMethod(*it3);C:\Users\user\Desktop\pr31help\
                //calldispatcher.cpp:128: ошибка: invalid use of incomplete type 'class Object'
-               //q->dispatchMethod(*it3);
+               q->dispatchMethod(*it3);
 
 
                // sender->dispatchMethod(*it3);

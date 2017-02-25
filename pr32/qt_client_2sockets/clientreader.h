@@ -1,0 +1,4 @@
+#ifndef CLIENTREADER_H
+#define CLIENTREADER_H
+
+#endif // CLIENTREADER_H

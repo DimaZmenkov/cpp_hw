@@ -92,7 +92,7 @@ public /*signals*/:
 
 
 int main(int argc, char *argv[])
-{
+{//constant time
     auto d = make_shared<CallDispatcher>();
 
     A a1(d);
@@ -103,6 +103,7 @@ int main(int argc, char *argv[])
     d->connect(&b1, "foo", &a1, "onFoo");
 
     // 1 signal => many slots
+
     d->connect(&b1, "bar", &a1, "onBar");
     d->connect(&b1, "bar", &a1, "onBaz"); //names shouldn't nesseraly match
     d->connect(&b1, "bar", &a2, "onBar");
@@ -110,8 +111,18 @@ int main(int argc, char *argv[])
     // 2 signals => 1 slot
     d->connect(&b1, "baz", &a2, "onBaz");
     d->connect(&b2, "baz", &a2, "onBaz");
+cout<<" &a1=";
+   cout<< &a1<<endl;
+   cout<<" &b1=";
+      cout<< &b1<<endl;
+      cout<<" &a2=";
+         cout<< &a2<<endl;
+         cout<<" &b2=";
+            cout<< &b2<<endl;
 
-    b1.foo(); // a1.onFoo()
+
+
+b1.foo(); // a1.onFoo()
     b1.bar(); // a1.onBar(), a1.onBaz(), a2.onBar()
     b1.baz(); // a2.onBaz()
 

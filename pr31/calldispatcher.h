@@ -14,7 +14,7 @@ class Object;
 class CallDispatcher
 {
 private:
- //std::shared_ptr<CallDispatcher> m_dispatcher;
+ std::shared_ptr<CallDispatcher> m_dispatcher;
     //...
   unordered_map < Object *, unordered_map<string ,unordered_map<Object *,unordered_set<string>>>> m_mult;
 

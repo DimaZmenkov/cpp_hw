@@ -1,0 +1,4 @@
+#ifndef CLIENTWRITER_H
+#define CLIENTWRITER_H
+
+#endif // CLIENTWRITER_H
