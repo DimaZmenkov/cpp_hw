@@ -6,6 +6,7 @@
 #include <memory>
 #include <thread>
 #include <mutex>
+//#include <QMutex>
 using namespace std;
 
 template<typename T, size_t N>
@@ -21,8 +22,8 @@ class RingBuffer
 
 public:
 
-    mutex g_lock_read;
-    mutex g_lock_write;
+   mutable mutex g_lock_read;
+    mutable mutex g_lock_write;
 
     size_t size() const
     {
@@ -40,7 +41,9 @@ public:
     void push_back(const int& elem)
     {
         condition_variable g_queuecheck;
+        bool flag;
         cout<<"in push_back"<<endl;
+        g_lock_read.lock();
         if (full())
 
         {
@@ -50,24 +53,31 @@ public:
             std::unique_lock<std::mutex> locker(g_lock_write);     //}
 
             //flag_write = false;
-            while(full())
+            while(flag)
+               {
                 g_queuecheck.wait(locker);
-            \
+               flag = full();
+               }
         }
-        g_lock_write.lock();
+
+
         tSize start = m_start%N;
         m_data[start] = elem;
         ++m_start;
         //flag_read = true;
 
-        g_queuecheck.notify_one();
-        g_lock_write.unlock();
+        //g_queuecheck.notify_one();
+       g_queuecheck.notify_all();
+        g_lock_read.unlock();
+
     }
 
     T& front()
     {
+        bool flag;
         condition_variable g_queuecheck;
         cout<<"in front"<<endl;
+        g_lock_write.lock();
         if (empty())
             //{
             // throw out_of_range("Buffer is emtpy");
@@ -77,15 +87,21 @@ public:
             std::unique_lock<std::mutex> locker(g_lock_read);     //}
             cout<<"empty"<<endl;
 
-            while(empty())
+            while(flag)
+               {
                 g_queuecheck.wait(locker);
+               flag = empty();
+               }
         }
+         g_lock_write.unlock();
         return m_data[m_end%N];
     }
 
     const T& front() const
     {
+
         condition_variable g_queuecheck;
+g_lock_write.lock();
         if (empty())
             //{
             //throw out_of_range("Buffer is emtpy");
@@ -99,10 +115,14 @@ public:
                 std::unique_lock<std::mutex> locker(g_lock_read);
                 //}
                 while(empty())
-                    g_queuecheck.wait(locker);
-            }
-        }
+                   {
 
+                    g_queuecheck.wait(locker);
+
+                }
+            }
+}
+        g_lock_write.unlock();
         return m_data[m_end%N];
     }
 
@@ -110,7 +130,9 @@ public:
     void pop_front()
     {
         condition_variable g_queuecheck;
+        //g_lock_write.lock();
         cout<<"in pop_front"<<endl;
+
         if (empty())
         {
 
@@ -124,12 +146,12 @@ public:
             ++m_end;
 
 
-            g_queuecheck.notify_one();
-
-
+            //g_queuecheck.notify_one();
+g_queuecheck.notify_all();
+//g_lock_write.unlock();
         }
     }
-protected:
+
     bool full() const
     {
 
@@ -152,7 +174,6 @@ protected:
     bool empty() const
     {
 
-
         tSize start = m_start % N;
         tSize end   = m_end % N;
 
@@ -165,6 +186,7 @@ protected:
                 result = true;
             }
         }
+
 
         return result;
     }
@@ -191,22 +213,24 @@ int main()
 
  RingBuffer<int, 2>  rb;
 
-    for(int i =0 ;i < 100; i++)
-     {
+    //for(int i =0 ;i < 100; i++)
+     //{
     std::thread thr1(run,std::ref(rb)  );
 
     std::thread thr2(run, std::ref(rb));
-
+    std::thread thr3(run, std::ref(rb));
+    std::thread thr4(run, std::ref(rb));
+std::thread thr5(run, std::ref(rb));
     thr1.join();
 
     thr2.join();
-
-
-    }
+    thr3.join();
+ thr4.join();
+ thr5.join();
+// cout<<"i="<<i<<endl;
+    //}
 
     //cout<<"11111111111111"<<endl;
     return 0;
 }
-
-
 
