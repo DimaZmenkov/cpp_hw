@@ -72,7 +72,10 @@ EventManager& EventManager::getInstance()
 
 void EventManager::publishEvent(const Event& ev)
 {
-   cout<<ev.getDescription()<< endl;
+   for( auto it = m_listeners.begin(); it != m_listeners.end(); ++it)
+       (*it).lock() -> notify(ev);
+
+    cout<<ev.getDescription()<< endl;
 }
 
 void EventManager::addListener(shared_ptr<EventListener>& listener)
@@ -105,11 +108,10 @@ void EventManager::removeListener(shared_ptr<EventListener>& listener)
           if(it->lock() == listener ) m_listeners.erase(it); break;
       }
 
-    if(v_ptr.expired ()) v_ptr.reset();
-     else  {
+
             listener = nullptr;
             v_ptr.reset();
-           }
+
 
 }
 struct FileLogger : EventListener
@@ -137,6 +139,7 @@ struct EventHandler : EventListener
     {
         cout << __PRETTY_FUNCTION__ << endl;
         cout << ev.getDescription() << endl;
+
     }
 };
 
@@ -160,6 +163,15 @@ evListener1 -> notify(event1);
 
     return 0;
 }
+
+
+
+
+
+
+
+
+
 
 
 
