@@ -34,45 +34,8 @@ public:
         return m_start - m_end;
     }
 
-    bool empty() const
-    {
-        mutex g_lock;
-        g_lock.lock();
-        tSize start = m_start % N;
-        tSize end   = m_end % N;
 
-        bool result = false;
 
-        if (start == end)
-        {
-            if (m_start == m_end)
-            {
-                result = true;
-            }
-        }
-        g_lock.unlock();
-        return result;
-    }
-
-    bool full() const
-    {
-        mutex g_lock;
-        g_lock.lock();
-        tSize  start = m_start % N;
-        tSize  end   = m_end % N;
-
-        bool result = false;
-
-        if (start == end)
-        {
-            if (m_start > m_end)
-            {
-                result = true;
-            }
-        }
-        g_lock.unlock();
-        return result;
-    }
 
     void push_back(const int& elem)
     {
@@ -140,8 +103,9 @@ public:
             }
         }
 
-        return m_data[m_end%5];
+        return m_data[m_end%N];
     }
+
 
     void pop_front()
     {
@@ -155,24 +119,66 @@ public:
         else
         {
 
-            g_lock_read.lock();
+
+            std::lock_guard<std::mutex> locker( g_lock_read);
             ++m_end;
 
 
             g_queuecheck.notify_one();
 
-            g_lock_read.unlock();
+
         }
     }
 protected:
+    bool full() const
+    {
+
+
+        tSize  start = m_start % N;
+        tSize  end   = m_end % N;
+
+        bool result = false;
+
+        if (start == end)
+        {
+            if (m_start > m_end)
+            {
+                result = true;
+            }
+        }
+
+        return result;
+    }
+    bool empty() const
+    {
+
+
+        tSize start = m_start % N;
+        tSize end   = m_end % N;
+
+        bool result = false;
+
+        if (start == end)
+        {
+            if (m_start == m_end)
+            {
+                result = true;
+            }
+        }
+
+        return result;
+    }
 
 
 
 };
-void run()
+
+
+//template<typename T, size_t N>
+void run(RingBuffer<int, 2>& rb )
 {
     cout<<"in run"<<endl;
-    RingBuffer<int, 2>  rb;
+
 
     rb.push_back(1);
     rb.front();
@@ -183,23 +189,24 @@ void run()
 int main()
 {
 
+ RingBuffer<int, 2>  rb;
 
+    for(int i =0 ;i < 100; i++)
+     {
+    std::thread thr1(run,std::ref(rb)  );
 
-    //for(int i =0 ;i < 100; i++)
-     //{
-    std::thread thr1(run);
-
-    std::thread thr2(run);
+    std::thread thr2(run, std::ref(rb));
 
     thr1.join();
 
     thr2.join();
 
 
-   // }
+    }
 
-
+    //cout<<"11111111111111"<<endl;
     return 0;
 }
+
 
 
