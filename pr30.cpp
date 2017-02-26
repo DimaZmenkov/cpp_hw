@@ -18,6 +18,7 @@ class RingBuffer
     unsigned long long m_start = 0;
     unsigned long long m_end = 0;
 
+
 public:
 
     mutex g_lock_read;
@@ -35,6 +36,8 @@ public:
 
     bool empty() const
     {
+        mutex g_lock;
+        g_lock.lock();
         tSize start = m_start % N;
         tSize end   = m_end % N;
 
@@ -47,12 +50,14 @@ public:
                 result = true;
             }
         }
-
+        g_lock.unlock();
         return result;
     }
 
     bool full() const
     {
+        mutex g_lock;
+        g_lock.lock();
         tSize  start = m_start % N;
         tSize  end   = m_end % N;
 
@@ -65,7 +70,7 @@ public:
                 result = true;
             }
         }
-
+        g_lock.unlock();
         return result;
     }
 
@@ -159,6 +164,10 @@ public:
             g_lock_read.unlock();
         }
     }
+protected:
+
+
+
 };
 void run()
 {
@@ -177,7 +186,7 @@ int main()
 
 
     //for(int i =0 ;i < 100; i++)
-    // {
+     //{
     std::thread thr1(run);
 
     std::thread thr2(run);
@@ -187,9 +196,10 @@ int main()
     thr2.join();
 
 
-    //}
+   // }
 
-    //cout<<"11111111111111"<<endl;
+
     return 0;
 }
+
 
