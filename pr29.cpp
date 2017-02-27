@@ -73,8 +73,11 @@ EventManager& EventManager::getInstance()
 void EventManager::publishEvent(const Event& ev)
 {
     for( auto it = m_listeners.begin(); it != m_listeners.end(); ++it)
-        if((*it).lock().get()!=0)  (*it).lock() -> notify(ev);
-
+        //if((*it).lock().get()!=0)  (*it).lock() -> notify(ev);
+        if ((*it).lock())
+        {
+            (*it).lock() -> notify(ev);
+        }
     cout<<ev.getDescription()<< endl;
 }
 
@@ -150,12 +153,19 @@ int main()
     shared_ptr<EventListener> evListener2 = make_shared<ConnectionMgr>();
     shared_ptr<EventListener> evListener3 = make_shared<EventHandler>();
     EventManager eventManager1;
-    eventManager1.addListener(evListener1);
-    eventManager1.addListener(evListener1);
-    //evListener1 = new EventHandler();
-    Event event1;
+    EventManager::getInstance().addListener(evListener1);
+    Event event1("Test event!");
+    EventManager::getInstance().publishEvent(event1);
+    EventManager::getInstance().addListener(evListener1);
+    //eventManager1.addListener(evListener1);
+    //eventManager1.addListener(evListener1);
+
+    //Event event1;
     evListener1 -> notify(event1);
-    eventManager1.removeListener(evListener1);
+    //eventManager1.removeListener(evListener1);
+    EventManager::getInstance().removeListener(evListener1);
+
+
     if(evListener1.use_count())
         evListener1 -> notify(event1);
 
@@ -163,23 +173,6 @@ int main()
 
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
