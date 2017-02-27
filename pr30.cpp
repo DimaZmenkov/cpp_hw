@@ -22,7 +22,7 @@ class RingBuffer
 
 public:
 
-   mutable mutex g_lock_read;
+    mutable mutex g_lock_read;
     mutable mutex g_lock_write;
 
     size_t size() const
@@ -54,10 +54,10 @@ public:
 
             //flag_write = false;
             while(flag)
-               {
+            {
                 g_queuecheck.wait(locker);
-               flag = full();
-               }
+                flag = full();
+            }
         }
 
 
@@ -67,7 +67,7 @@ public:
         //flag_read = true;
 
         //g_queuecheck.notify_one();
-       g_queuecheck.notify_all();
+        g_queuecheck.notify_all();
         g_lock_read.unlock();
 
     }
@@ -88,12 +88,12 @@ public:
             cout<<"empty"<<endl;
 
             while(flag)
-               {
+            {
                 g_queuecheck.wait(locker);
-               flag = empty();
-               }
+                flag = empty();
+            }
         }
-         g_lock_write.unlock();
+        g_lock_write.unlock();
         return m_data[m_end%N];
     }
 
@@ -101,7 +101,7 @@ public:
     {
 
         condition_variable g_queuecheck;
-g_lock_write.lock();
+        g_lock_write.lock();
         if (empty())
             //{
             //throw out_of_range("Buffer is emtpy");
@@ -115,13 +115,13 @@ g_lock_write.lock();
                 std::unique_lock<std::mutex> locker(g_lock_read);
                 //}
                 while(empty())
-                   {
+                {
 
                     g_queuecheck.wait(locker);
 
                 }
             }
-}
+        }
         g_lock_write.unlock();
         return m_data[m_end%N];
     }
@@ -147,15 +147,15 @@ g_lock_write.lock();
 
 
             //g_queuecheck.notify_one();
-g_queuecheck.notify_all();
-//g_lock_write.unlock();
+            g_queuecheck.notify_all();
+            //g_lock_write.unlock();
         }
     }
 
     bool full() const
     {
 
-
+        g_lock_write.lock();
         tSize  start = m_start % N;
         tSize  end   = m_end % N;
 
@@ -168,12 +168,12 @@ g_queuecheck.notify_all();
                 result = true;
             }
         }
-
+        g_lock_write.unlock();
         return result;
     }
     bool empty() const
     {
-
+        g_lock_read.lock();
         tSize start = m_start % N;
         tSize end   = m_end % N;
 
@@ -187,7 +187,7 @@ g_queuecheck.notify_all();
             }
         }
 
-
+        g_lock_read.unlock();
         return result;
     }
 
@@ -211,23 +211,23 @@ void run(RingBuffer<int, 2>& rb )
 int main()
 {
 
- RingBuffer<int, 2>  rb;
+    RingBuffer<int, 2>  rb;
 
     //for(int i =0 ;i < 100; i++)
-     //{
+    //{
     std::thread thr1(run,std::ref(rb)  );
 
     std::thread thr2(run, std::ref(rb));
     std::thread thr3(run, std::ref(rb));
     std::thread thr4(run, std::ref(rb));
-std::thread thr5(run, std::ref(rb));
+    std::thread thr5(run, std::ref(rb));
     thr1.join();
 
     thr2.join();
     thr3.join();
- thr4.join();
- thr5.join();
-// cout<<"i="<<i<<endl;
+    thr4.join();
+    thr5.join();
+    //cout<<"i="<<i<<endl;
     //}
 
     //cout<<"11111111111111"<<endl;
