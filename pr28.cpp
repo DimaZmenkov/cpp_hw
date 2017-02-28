@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include<cassert>
+#include<string>
 namespace my {
 
 
@@ -379,7 +380,7 @@ public:
         list_Node<T>* tmp = tail->prev;
         delete tail;
         tail = tmp;
-        //update_tail();
+        update_tail();
         update_sentinel();
         return data;
     }
@@ -389,15 +390,10 @@ public:
         list_Node<T>*new_head = nullptr;
 
         list_Node<T>* tmp = tail;
-        //T value = front();
-
-        //?????? ???????? ??????? ??????
-        //list_Node<T>*new_tail = nullptr;
-        //list_Node<T>*head1 =  head;
 
         for(list_Node<T>*pos=head;pos;)
         {
-            //?????? ? ?????? ?????? ??????
+
             list_Node<T>*save_next = pos->next;
             pos->next=new_head;
             new_head=pos;
@@ -405,49 +401,22 @@ public:
             pos->prev =save_next;//->next;
 
             pos=save_next;
-            //pop_front();
-            //push_front(value);
+
         }
-        //sentinel = head;
+
         tail = head;
-        //tail->next = nullptr;
-        //?????? ?? ???????
+        tail->next = nullptr;
+
         head =new_head;
-        //pop_front();
-        //push_front(value);
+
         head ->prev= tmp;
         head =head ->prev;
         head ->prev = nullptr;
         tail-> next = nullptr;
-        //update_tail();
-        //update_sentinel();
+        update_tail();
+        update_sentinel();
 
     }
-    /*void    reverse()
-    {
-        if( head == nullptr )
-        {
-            return;
-        }
-
-        for(;;)
-        {
-            std::swap
-                (
-                    head->prev,
-                    head->next
-                );
-
-           list_Node<T>*  prev1    =   head->prev;
-
-            if( prev1 == nullptr )
-            {
-                break;
-            }
-
-            head   =   prev1;
-        }//for
-    }*/
 
     bool empty()
     {
@@ -473,14 +442,12 @@ public:
         //list_Node<T>* tmp = new list_Node<T>{value, nullptr, sentinel};
         list_Node<T>* tmp = new list_Node<T>{value,nullptr, sentinel };
 
-        //if (tail != sentinel)
-        // cout<<"tail->data="<<tail->data<<endl;
-        //if (head != sentinel)
+
         if (head != sentinel)
         {
             tmp->prev = tail;
             tail->next  = tmp;
-            //tmp->prev = tail;
+
             tail  =  tmp;
 
         }
@@ -488,46 +455,12 @@ public:
         {
             head = tmp;
             // head ->next = nullptr;
-            // head ->prev = nullptr;
+            //head ->prev = nullptr;
         }
         update_tail();
         update_sentinel();
     }
 
-    /* void push_back( int data)
-    {
-       // if (Where == NULL && _size != 0) // некорректный указатель
-           // return NULL;
-      list_Node<T>* tmp = new list_Node<T>{data,sentinel, nullptr};
-        //ListNode* pNewNode = new ListNode(data);
-       // if (Where == NULL && _size == 0)
-        //{
-           // head = pNewNode;
-            //tail = pNewNode;
-       // }
-        //else
-       // {
-            // Есть следующий элемент
-           /* if (Where->next)
-            {
-                ListNode* pNextNode = Where->next;
-                Where->next = pNewNode;
-                pNewNode->prev = Where;
-                pNewNode->next = pNextNode;
-                pNextNode->prev = pNewNode;
-            }
-            // Where = _pEnd
-            //else
-            if (head!
-                tail->next = tmp;
-                tmp->prev = tail;
-                tail = tmp;
-           // }
-       // }
-        //_size++;
-        //return pNewNode;
-   // }
-    }*/
 
     iterator begin()
     {
@@ -601,10 +534,10 @@ int main()
 
     my::list<int> dlist;
 
-    // dlist.push_back(1);
-    // dlist.push_back(2);
-    // dlist.push_back(3);
-    dlist.push_front(1); dlist.push_front(1); dlist.push_front(1);
+    dlist.push_back(1);
+    dlist.push_back(2);
+    dlist.push_back(3);
+    //dlist.push_front(1); dlist.push_front(1); dlist.push_front(1);
     assert(dlist.empty()==false);
 
     //assert(dlist.empty()==false);
@@ -618,58 +551,59 @@ int main()
     my::list<int> dlist2 = dlist;// runtime error
     // cout << "dlist2: " << dlist2 << endl;
 
-    ////            assert(dlist.back() ==dlist2.back());
-    ////            assert(dlist.front()==dlist2.front());
+    assert(dlist.back() ==dlist2.back());
+    assert(dlist.front()==dlist2.front());
 
-    ////            cout << "--reversed--" << endl;
-    ////            for(auto it = dlist.rbegin(); it!=dlist.rend(); ++it)
-    ////            {
-    ////                cout << *it << endl;
-    ////            }
+    std::  cout << "--reversed--" <<std::  endl;
+    for(auto it = dlist.rbegin(); it!=dlist.rend(); ++it)
+    {
+        std:: cout << *it <<std::  endl;
+    }
 
-    ////            {
-    ////                my::list<string> list;
-    ////                list.push_back("xxx");
-    ////                list.pop_back();
-    ////                list.push_back("first");
-    ////                list.push_back("second");
+    {
+        my::list<std::string> list;
+        list.push_back("xxx");
+        list.pop_back();
+        list.push_back("first");
+        list.push_back("second");
 
-    ////                list.reverse();
+        list.reverse();
 
-    ////                assert(*(list.begin()) == "second");
-    ////                assert(*(list.end())   == "first");
-    ////                cout << "list: " << list << endl;
-    ////            }
+        assert(*(list.begin()) == "second");
+        //assert(*(list.end())   == "first"); must be [begin,end  )?
+        //std:: cout << "list: " << list <<std::  endl;
+    }
 
-    ////            cout << *(dlist.rbegin()) << endl;
-    ////            assert(dlist.back() ==*(dlist.rbegin()));
+    std::cout << *(dlist.rbegin()) << std::endl;
+    assert(dlist.back() ==*(dlist.rbegin()));
 
-    ////            dlist.pop_back();
+    dlist.pop_back();
     ////            cout << "popped back: " << dlist << endl;
-    ////            assert(dlist.empty()==false);
+    assert(dlist.empty()==false);
 
-    ////            dlist.pop_front();
+    dlist.pop_front();
     ////            cout << "popped front: " << dlist << endl;
     ////            assert(dlist.empty()==false);
 
-    ////            dlist.pop_front();
+    dlist.pop_front();
     ////            cout << "popped front: " << dlist << endl;
-    ////            assert(dlist.empty()==true);
+    assert(dlist.empty()==true);
 
-    ////            dlist.push_front(11);
-    ////            auto it = dlist.begin();
-    ////            *(it) = 42;
+    dlist.push_front(11);
+    auto it = dlist.begin();
+    *(it) = 42;
     ////            cout << "push & modify: " << dlist << endl;
 
-    ////            assert(*(  dlist.begin())   ==dlist.front());
-    ////            assert(*(--dlist.end())     ==dlist.back());
-    ////            assert(*(  dlist.rbegin())  ==dlist.back());
-    ////            assert(*(--dlist.rend())    ==dlist.front());
-    ////            assert(42 == dlist.front());
+    assert(*(  dlist.begin())   ==dlist.front());
+    assert(*(--dlist.end())     ==dlist.back());
+    assert(*(  dlist.rbegin())  ==dlist.back());
+    assert(*(--dlist.rend())    ==dlist.front());
+    assert(42 == dlist.front());
 
-    ////            dlist.pop_back();
+    dlist.pop_back();
+
     ////            cout << "popped back: " << dlist << endl;
-    ////            assert(dlist.empty()==true);
+    // assert(dlist.empty()==true);
 
 
 
