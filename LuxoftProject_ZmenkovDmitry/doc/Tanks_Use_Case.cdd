@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<c:Diagram
+xmlns:c="http://www.cadifra.com/schema/1.0"
+xmlns:c1v3="http://www.cadifra.com/schema/1.3"
+ProductVersion="1.3.3">
+
+<Page id="r1"
+Size="9"
+Width="21000"
+Height="29700"
+Rows="1"
+Columns="1"
+Margins="1000 1000 1000 1000"
+CutGlueMargins="1000 1000 1000 1000"
+Scale="1"/>
+
+<DiagramType id="r2"
+TypeValue="3"/>
+
+<Style id="r3">
+<dir n="Base" Typeface="arial" Size="11" Bold="0">
+<dir n="Dependency" Bold="0"/>
+<dir n="Free Text" Size="10" Bold="0"/>
+<dir n="Use Case Diagram">
+<dir n="Actor" Bold="1"/>
+<dir n="Use Case" Bold="1"/>
+</dir>
+</dir>
+</Style>
+
+<Actor id="r4"
+Pos="3500 -4000"
+Size="1100 1400">
+<Text>My Tank</Text>
+</Actor>
+
+<UseCase id="r5"
+Pos="7100 -4200"
+Size="3000 1000">
+<Text>move</Text>
+</UseCase>
+
+<UseCase id="r6"
+Pos="7000 -1200"
+Size="3000 1000">
+<Text>shoot</Text>
+</UseCase>
+
+<UseCase id="r7"
+Pos="7100 -2700"
+Size="3000 1000">
+<Text>be afflicted</Text>
+</UseCase>
+
+<UseCaseAssoc id="r8">
+<End id="r9"
+Pos="4826 -5946"
+Actor="r4"/>
+<Segment id="r10"
+Oblique="1"/>
+<End id="r11"
+Pos="7130.3061543300937 -3300"
+UseCase="r7"/>
+</UseCaseAssoc>
+
+<UseCaseAssoc id="r12">
+<End id="r13"
+Pos="4826 -5946"
+Actor="r4"/>
+<Segment id="r14"
+Oblique="1"/>
+<End id="r15"
+Pos="7100 -4700"
+UseCase="r5"/>
+</UseCaseAssoc>
+
+<Actor id="r16"
+Pos="3800 -6900"
+Size="1100 1400">
+<Text>bullet<p/>
+</Text>
+</Actor>
+
+<UseCaseAssoc id="r17">
+<End id="r18"
+Pos="4900 -7800"
+Actor="r16"/>
+<Segment id="r19"
+Oblique="1"/>
+<End id="r20"
+Pos="7130.3061543300937 -4800"
+UseCase="r5"/>
+</UseCaseAssoc>
+
+<UseCase id="r21"
+Pos="7400 -7400"
+Size="2900 1100">
+<Text>hit the tank<p/>
+</Text>
+</UseCase>
+
+<UseCaseAssoc id="r22">
+<End id="r23"
+Pos="4868 -8600"
+Actor="r16"/>
+<Segment id="r24"
+Oblique="1"/>
+<End id="r25"
+Pos="7454.9674905295797 -8100"
+UseCase="r21"/>
+</UseCaseAssoc>
+
+<Dependency id="r26">
+<End id="r27"
+Pos="8800 -7400.3270889376417"
+Party="r21"
+Type="1"/>
+<Segment id="r28"
+Ends="r27 r29"
+Oblique="1">
+<Anchor id="r30"
+Pos="8754.4479688451647 -6397.5267105730481">
+<FreeText id="r31"
+Pos="8954 -6198"
+Origin="4">
+<Text>«include»</Text>
+</FreeText>
+</Anchor>
+</Segment>
+<End id="r29"
+Pos="8700 -5198.8876515698585"
+Party="r5"
+Type="2"/>
+</Dependency>
+
+<UseCase id="r32"
+Pos="12200 -11300"
+Size="3000 1100">
+<Text>destroy wall<p/>
+</Text>
+</UseCase>
+
+<UseCaseAssoc id="r33">
+<End id="r34"
+Pos="4868 -9000"
+Actor="r16"/>
+<Segment id="r35"
+Oblique="1"/>
+<End id="r36"
+Pos="12206.211206804091 -11800"
+UseCase="r32"/>
+</UseCaseAssoc>
+
+<Dependency id="r37">
+<End id="r38"
+Pos="13400 -11311.112256587701"
+Party="r32"
+Type="1"/>
+<Segment id="r39"
+Ends="r38 r40"
+Oblique="1">
+<Anchor id="r41"
+Pos="11918.451861749574 -8878.8647134295315">
+<FreeText id="r42"
+Pos="12118 -8779"
+Origin="4">
+<Text>«include»</Text>
+</FreeText>
+</Anchor>
+</Segment>
+<End id="r40"
+Pos="9600 -5072.677996249965"
+Party="r5"
+Type="2"/>
+</Dependency>
+
+<UseCaseAssoc id="r43">
+<End id="r44"
+Pos="4600 -4500"
+Actor="r4"/>
+<Segment id="r45"
+Oblique="1"/>
+<End id="r46"
+Pos="7000 -1700"
+UseCase="r6"/>
+</UseCaseAssoc>
+
+</c:Diagram>
