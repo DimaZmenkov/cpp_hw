@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<c:Diagram
+xmlns:c="http://www.cadifra.com/schema/1.0"
+xmlns:c1v3="http://www.cadifra.com/schema/1.3"
+ProductVersion="1.3.3">
+
+<Page id="r1"
+Size="9"
+Width="21000"
+Height="29700"
+Rows="1"
+Columns="1"
+Margins="1000 1000 1000 1000"
+CutGlueMargins="1000 1000 1000 1000"
+Scale="1"/>
+
+<DiagramType id="r2"
+TypeValue="1"/>
+
+<SeqObject id="r3"
+Pos="700 -1000"
+Size="2000 1000">
+<Text>Player</Text>
+<LifeLine id="r4"
+Pos="1700 -2000"
+Len="6000"
+Dying="1">
+<Activation id="r5"
+Pos="1500 -4300"
+Len="2000"/>
+</LifeLine>
+</SeqObject>
+
+<Message id="r9">
+<SourceEnd id="r6"
+Pos="1700 -6300"
+Party="r4"/>
+<Segment id="r7"/>
+<TargetEnd id="r8"
+Pos="1900 -6300"
+Party="r5"
+ArrowType="1"/>
+</Message>
+
+<Message id="r13">
+<SourceEnd id="r10"
+Pos="1700 -8000"
+Party="r4"/>
+<Segment id="r11"
+Oblique="1"/>
+<TargetEnd id="r12"
+Pos="1700 -8000"
+Party="r4"
+ArrowType="1"/>
+</Message>
+
+<Style id="r14">
+<dir n="Base" Typeface="arial" Size="11" Bold="0">
+<dir n="Free Text" Size="10" Bold="0"/>
+<dir n="Sequence Diagram">
+<dir n="Message" Bold="0"/>
+<dir n="Object" Bold="0"/>
+</dir>
+</dir>
+</Style>
+
+<SeqObject id="r15"
+Pos="6500 -700"
+Size="2000 1300">
+<Text>Enemy</Text>
+<LifeLine id="r16"
+Pos="7500 -2000"
+Len="6000"
+Dying="1">
+<Activation id="r17"
+Pos="7300 -4000"
+Len="2400"/>
+</LifeLine>
+</SeqObject>
+
+<Message id="r21">
+<SourceEnd id="r18"
+Pos="7500 -4300"
+Party="r16"/>
+<Segment id="r19"/>
+<TargetEnd id="r20"
+Pos="7300 -4300"
+Party="r17"
+ArrowType="1"/>
+</Message>
+
+<Message id="r25">
+<SourceEnd id="r22"
+Pos="11200 -1700"
+Party="r27"/>
+<Segment id="r23"
+Oblique="1"/>
+<TargetEnd id="r24"
+Pos="11200 -1700"
+Party="r27"
+ArrowType="1"/>
+</Message>
+
+<SeqObject id="r26"
+Pos="10200 -700"
+Size="2000 1000">
+<Text>Wall</Text>
+<LifeLine id="r27"
+Pos="11200 -1700"
+Len="7600">
+<Activation id="r28"
+Pos="11000 -3300"
+Len="2000"/>
+</LifeLine>
+</SeqObject>
+
+<SeqObject id="r29"
+Pos="14600 -800"
+Size="2000 1000">
+<Text>Gold</Text>
+<LifeLine id="r30"
+Pos="15600 -1800"
+Len="6000"
+Dying="1">
+<Activation id="r35"
+Pos="15400 -3800"
+Len="2000"/>
+</LifeLine>
+</SeqObject>
+
+<Message id="r34">
+<SourceEnd id="r31"
+Pos="15600 -3300"
+Party="r30"/>
+<Segment id="r32"
+Oblique="1"/>
+<TargetEnd id="r33"
+Pos="15600 -1800"
+Party="r30"
+ArrowType="1"/>
+</Message>
+
+<Message id="r36">
+<SourceEnd id="r37"
+Pos="1700 -3700"
+Party="r4"/>
+<Segment id="r38">
+<Anchor id="r46"
+Pos="3700 -3700">
+<FreeText id="r47"
+Pos="3800 -3700"
+Origin="4">
+<Text>move</Text>
+</FreeText>
+</Anchor>
+</Segment>
+<TargetEnd id="r39"
+Pos="7500 -3700"
+Party="r16"
+ArrowType="1"/>
+</Message>
+
+<Message id="r40">
+<SourceEnd id="r41"
+Pos="7300 -6000"
+Party="r17"/>
+<Segment id="r42">
+<Anchor id="r44"
+Pos="3800 -6000">
+<FreeText id="r45"
+Pos="3800 -5800"
+Origin="4">
+<Text>decrement life</Text>
+</FreeText>
+</Anchor>
+</Segment>
+<TargetEnd id="r43"
+Pos="1700 -6000"
+Party="r4"
+ArrowType="1"/>
+</Message>
+
+<Message id="r48">
+<SourceEnd id="r49"
+Pos="1700 -2400"
+Party="r4"/>
+<Segment id="r50">
+<Anchor id="r52"
+Pos="4800 -2400">
+<FreeText id="r53"
+Pos="4800 -2200"
+Origin="4">
+<Text>move</Text>
+</FreeText>
+</Anchor>
+</Segment>
+<TargetEnd id="r51"
+Pos="11200 -2400"
+Party="r27"
+ArrowType="1"/>
+</Message>
+
+<Message id="r54">
+<SourceEnd id="r55"
+Pos="11200 -6800"
+Party="r27"/>
+<Segment id="r56">
+<Anchor id="r58"
+Pos="3600 -6800">
+<FreeText id="r59"
+Pos="3600 -6600"
+Origin="4">
+<Text>stop move</Text>
+</FreeText>
+</Anchor>
+</Segment>
+<TargetEnd id="r57"
+Pos="1700 -6800"
+Party="r4"
+ArrowType="1"/>
+</Message>
+
+<Message id="r60">
+<SourceEnd id="r61"
+Pos="1700 -2800"
+Party="r4"/>
+<Segment id="r62">
+<Anchor id="r64"
+Pos="12600 -2800">
+<FreeText id="r65"
+Pos="12600 -2600"
+Origin="4">
+<Text>move</Text>
+</FreeText>
+</Anchor>
+</Segment>
+<TargetEnd id="r63"
+Pos="15600 -2800"
+Party="r30"
+ArrowType="1"/>
+</Message>
+
+</c:Diagram>

@@ -46,10 +46,10 @@ Size="9100 6700">
 Pos="8400 -2600"
 Size="9100 2200">
 <Text>- isWin_:bool<p/>
-- quantityTanks_ : int<p/>
+- quantityTanks_:int<p/>
 - widthWalls_ : int<p/>
--tanks_ :std::vector&lt;shared_ptr&lt;Tank&gt;&gt;<p/>
-mainTank_  :  shared_ptr&lt;Tank&gt;<p/>
+-tanks_ :std::vector&lt;Tank&gt;<p/>
+mainTank_; Tank<p/>
 …</Text>
 </Compartment>
 <Compartment id="r6"
@@ -96,14 +96,6 @@ Previous="r18">
  virtual getIsMain()  override : bool<p/>
  + draw( dc : HDC): void</Text>
 </Compartment>
-<Anchor id="r59"
-Pos="15000 -18800">
-<FreeText id="r60"
-Pos="15200 -19000"
-Origin="1">
-<Text/>
-</FreeText>
-</Anchor>
 </Class>
 
 <Assoc id="r8">
@@ -280,15 +272,11 @@ Type="2"/>
 <Segment id="r37"
 Ends="r36 r38"/>
 <Join id="r38"
-Pos="11600 -20100"/>
+Pos="11600 -22300"/>
 <Segment id="r55"
 Ends="r38 r56"/>
-<Join id="r56"
-Pos="13700 -20100"/>
-<Segment id="r57"
-Ends="r56 r58"/>
-<End id="r58"
-Pos="13700 -22000"
+<End id="r56"
+Pos="12600 -22300"
 Class="r34"
 Type="1"/>
 </Generalization>
@@ -314,18 +302,32 @@ Class="r27"
 Type="1"/>
 </Generalization>
 
-<Generalization id="r61">
-<End id="r62"
-Pos="14900 -18800"
+<Generalization id="r57">
+<End id="r58"
+Pos="14300 -18800"
 Class="r7"
 Type="2"/>
-<Segment id="r87"
-Ends="r62 r88"/>
-<End id="r88"
-Pos="14900 -22000"
+<Segment id="r59"
+Ends="r58 r60"/>
+<End id="r60"
+Pos="14300 -22000"
 Class="r34"
 Type="1"/>
 </Generalization>
+
+<Class id="r61"
+Pos="1200 -3100"
+Size="2000 2500">
+<Text>Rect</Text>
+<Compartment id="r62"
+Pos="1200 -4100"
+Size="2000 1500">
+<Text>+left:int<p/>
++up:int<p/>
++right:int<p/>
++bottom: int</Text>
+</Compartment>
+</Class>
 
 <Dependency id="r63">
 <End id="r64"
@@ -356,11 +358,11 @@ Type="1"/>
 <Segment id="r73"
 Ends="r72 r74"/>
 <Join id="r74"
-Pos="1000 -11100"/>
+Pos="1000 -12200"/>
 <Segment id="r75"
 Ends="r74 r76"/>
 <Join id="r76"
-Pos="9600 -11100"/>
+Pos="9600 -12200"/>
 <Segment id="r77"
 Ends="r76 r78"/>
 <End id="r78"
@@ -369,41 +371,38 @@ Party="r16"
 Type="2"/>
 </Dependency>
 
-<Class id="r79"
-Pos="1200 -3400"
-Size="2000 2600">
-<Text>Rect<p/>
-</Text>
-<Compartment id="r80"
-Pos="1200 -4500"
-Size="2000 1500">
-<Text>-left : int <p/>
- -up : int<p/>
-  -right : int<p/>
--bottom : int</Text>
-</Compartment>
-</Class>
-
-<Assoc id="r81">
+<Dependency id="r79">
+<End id="r80"
+Pos="8400 -4700"
+Party="r4"
+Type="1"/>
+<Segment id="r81"
+Ends="r80 r82"/>
 <End id="r82"
-Pos="8400 -4500"
-Class="r4"
-Type="1"/>
-<Segment id="r83"
-Ends="r82 r84">
-<Anchor id="r85"
-Pos="3600 -4500">
-<FreeText id="r86"
-Pos="3600 -4300"
-Origin="4">
-<Text>agregation</Text>
-</FreeText>
-</Anchor>
-</Segment>
+Pos="3200 -4700"
+Party="r61"
+Type="2"/>
+</Dependency>
+
+<Dependency id="r83">
 <End id="r84"
-Pos="3200 -4500"
-Class="r79"
+Pos="7500 -13100"
+Party="r27"
 Type="1"/>
-</Assoc>
+<Segment id="r85"
+Ends="r84 r86"/>
+<Join id="r86"
+Pos="7500 -8400"/>
+<Segment id="r87"
+Ends="r86 r88"/>
+<Join id="r88"
+Pos="8800 -8400"/>
+<Segment id="r89"
+Ends="r88 r90"/>
+<End id="r90"
+Pos="8800 -7600"
+Party="r4"
+Type="2"/>
+</Dependency>
 
 </c:Diagram>

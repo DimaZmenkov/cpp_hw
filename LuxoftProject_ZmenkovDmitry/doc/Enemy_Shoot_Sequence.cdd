@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<c:Diagram
+xmlns:c="http://www.cadifra.com/schema/1.0"
+xmlns:c1v3="http://www.cadifra.com/schema/1.3"
+ProductVersion="1.3.3">
+
+<Page id="r1"
+Size="9"
+Width="21000"
+Height="29700"
+Rows="1"
+Columns="1"
+Margins="1000 1000 1000 1000"
+CutGlueMargins="1000 1000 1000 1000"
+Scale="1"/>
+
+<DiagramType id="r2"
+TypeValue="1"/>
+
+<SeqObject id="r3"
+Pos="10900 -2700"
+Size="2000 1000">
+<Text>Wall</Text>
+<LifeLine id="r4"
+Pos="11900 -3700"
+Len="7800">
+<Activation id="r5"
+Pos="11700 -6300"
+Len="2000"/>
+</LifeLine>
+</SeqObject>
+
+<Style id="r6">
+<dir n="Base" Typeface="arial" Size="11" Bold="0">
+<dir n="Free Text" Size="10" Bold="0"/>
+<dir n="Sequence Diagram">
+<dir n="Message" Bold="0"/>
+<dir n="Object" Bold="0"/>
+</dir>
+</dir>
+</Style>
+
+<SeqObject id="r7"
+Pos="1300 -3200"
+Size="2000 1000">
+<Text>Player</Text>
+<LifeLine id="r8"
+Pos="2300 -4200"
+Len="6000"
+Dying="1">
+<Activation id="r9"
+Pos="2100 -5800"
+Len="2000"/>
+</LifeLine>
+</SeqObject>
+
+<Message id="r13">
+<SourceEnd id="r10"
+Pos="2300 -7800"
+Party="r8"/>
+<Segment id="r11"/>
+<TargetEnd id="r12"
+Pos="2500 -7800"
+Party="r9"
+ArrowType="1"/>
+</Message>
+
+<Message id="r17">
+<SourceEnd id="r14"
+Pos="2300 -10200"
+Party="r8"/>
+<Segment id="r15"
+Oblique="1"/>
+<TargetEnd id="r16"
+Pos="2300 -10200"
+Party="r8"
+ArrowType="1"/>
+</Message>
+
+<SeqObject id="r18"
+Pos="5300 -3000"
+Size="2000 1300">
+<Text>Enemy</Text>
+<LifeLine id="r19"
+Pos="6300 -4300"
+Len="6000"
+Dying="1">
+<Activation id="r20"
+Pos="6100 -5500"
+Len="2400"/>
+</LifeLine>
+</SeqObject>
+
+<Message id="r24">
+<SourceEnd id="r21"
+Pos="6300 -5800"
+Party="r19"/>
+<Segment id="r22"/>
+<TargetEnd id="r23"
+Pos="6100 -5800"
+Party="r20"
+ArrowType="1"/>
+</Message>
+
+<SeqObject id="r25"
+Pos="15800 -2900"
+Size="2000 1000">
+<Text>Gold</Text>
+<LifeLine id="r26"
+Pos="16800 -3900"
+Len="6000"
+Dying="1">
+<Activation id="r31"
+Pos="16600 -5900"
+Len="2000"/>
+</LifeLine>
+</SeqObject>
+
+<Message id="r30">
+<SourceEnd id="r27"
+Pos="16800 -5400"
+Party="r26"/>
+<Segment id="r28"
+Oblique="1"/>
+<TargetEnd id="r29"
+Pos="16800 -3900"
+Party="r26"
+ArrowType="1"/>
+</Message>
+
+<Message id="r32">
+<SourceEnd id="r33"
+Pos="6300 -5100"
+Party="r19"/>
+<Segment id="r34">
+<Anchor id="r40"
+Pos="3900 -5100">
+<FreeText id="r41"
+Pos="3900 -4900"
+Origin="4">
+<Text>shoot</Text>
+</FreeText>
+</Anchor>
+</Segment>
+<TargetEnd id="r35"
+Pos="2300 -5100"
+Party="r8"
+ArrowType="1"/>
+</Message>
+
+<Message id="r36">
+<SourceEnd id="r37"
+Pos="2300 -8000"
+Party="r8"/>
+<Segment id="r38">
+<Anchor id="r42"
+Pos="3900 -8000">
+<FreeText id="r43"
+Pos="3900 -7800"
+Origin="4">
+<Text>decrement life</Text>
+</FreeText>
+</Anchor>
+</Segment>
+<TargetEnd id="r39"
+Pos="6300 -8000"
+Party="r19"
+ArrowType="1"/>
+</Message>
+
+<Message id="r44">
+<SourceEnd id="r45"
+Pos="6300 -4900"
+Party="r19"/>
+<Segment id="r46">
+<Anchor id="r48"
+Pos="8800 -4900">
+<FreeText id="r49"
+Pos="8800 -4700"
+Origin="4">
+<Text>shoot</Text>
+</FreeText>
+</Anchor>
+</Segment>
+<TargetEnd id="r47"
+Pos="11900 -4900"
+Party="r4"
+ArrowType="1"/>
+</Message>
+
+<Message id="r50">
+<SourceEnd id="r51"
+Pos="11700 -7600"
+Party="r5"/>
+<Segment id="r52">
+<Anchor id="r54"
+Pos="8900 -7600">
+<FreeText id="r55"
+Pos="8900 -7400"
+Origin="4">
+<Text>destroy part</Text>
+</FreeText>
+</Anchor>
+</Segment>
+<TargetEnd id="r53"
+Pos="6500 -7600"
+Party="r20"
+ArrowType="1"/>
+</Message>
+
+<Message id="r56">
+<SourceEnd id="r57"
+Pos="6500 -6300"
+Party="r20"/>
+<Segment id="r58">
+<Anchor id="r60"
+Pos="8600 -6300">
+<FreeText id="r61"
+Pos="8600 -6100"
+Origin="4">
+<Text>shoot</Text>
+</FreeText>
+</Anchor>
+</Segment>
+<TargetEnd id="r59"
+Pos="16800 -6300"
+Party="r26"
+ArrowType="1"/>
+</Message>
+
+<Message id="r62">
+<SourceEnd id="r63"
+Pos="16800 -8300"
+Party="r26"/>
+<Segment id="r64"/>
+<Join id="r65"
+Pos="14800 -8300"/>
+<Segment id="r66"/>
+<Join id="r67"
+Pos="14800 -9200"/>
+<Segment id="r68">
+<Anchor id="r70"
+Pos="9000 -9200">
+<FreeText id="r71"
+Pos="9000 -9000"
+Origin="4">
+<Text>GameOver</Text>
+</FreeText>
+</Anchor>
+</Segment>
+<TargetEnd id="r69"
+Pos="6300 -9200"
+Party="r19"
+ArrowType="1"/>
+</Message>
+
+</c:Diagram>
