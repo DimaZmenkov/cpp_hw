@@ -60,5 +60,7 @@ public:
 	bool testGameOver();
 	vector<shared_ptr<MilitaryInstance>> getBullets();
 void	createFortress();
+void correctWall(Rect& rect, int index, bool isVertical) const;
+
 
 };

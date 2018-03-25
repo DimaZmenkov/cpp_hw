@@ -4,7 +4,7 @@
 Game::Game() :
 	widthBorder_(10),
 	timeSleep_(50),
-	quantityWalls_(2),
+	quantityWalls_(15),
 	widthWalls_(10),
 	quantityTanks_(3),
 	isWin_(false),
@@ -152,6 +152,9 @@ void Game::Run()
 		}*/
 		testWalls();
 		testTanks();
+		for (auto it = bullets_.begin(); it != bullets_.end(); ++it)
+		(*it)->move();
+		
 		//isWin_ = true;
 		//for(int i = 0;i < tanks_.size(); i++)
 		//if (tanks_[i].getLife() != 0) { isWin_ = false; break; }
@@ -171,9 +174,9 @@ void Game::Run()
 
 		StringCchPrintf(szbuff  , 255, TEXT("quantity of tanks: %d"), tanks_.size());
 		SetConsoleTitle(szbuff);
-		enemyShoot();
+		//enemyShoot();
 		time = clock();
-		if (time - timeShoot_ > 3) { timeShoot_ = time; enemyShoot(); }
+		if (time - timeShoot_ > 550) { timeShoot_ = time; enemyShoot(); }
 		if (testGameOver()) break;
       Sleep(timeSleep_);
 	 // if (isWin_) break;
@@ -198,14 +201,17 @@ void	Game::createWalls()
 for (int i = 0; i < quantityWalls_; i++)
 	{
 int width, height;
-rect.left = rand() % (widthField - widthWalls_) + field_.left;
-width = field_.right - rect.left;
-rect.up = rand() % (heightField - widthWalls_) + field_.up;
-height = field_.bottom - rect.up;
-while (true) {
+
+int count = 0;
+while (true)
+{
+	rect.left = rand() % (widthField - widthWalls_ - 30) + field_.left;
+	width = field_.right - rect.left;
+	rect.up = rand() % (heightField - widthWalls_ - 30) + field_.up;
+	height = field_.bottom - rect.up;
 	if (isVertical)
 	{
-		rect.bottom = rand() % height + field_.up;
+		rect.bottom = rand() % height + rect.up + 20;
 		rect.right = rect.left + widthWalls_;
 	}
 	else
@@ -215,9 +221,15 @@ while (true) {
 	}
 	bool isIntersect = false;
 	for(int j = 0;j < walls_.size();j++)
-		if (isIntersectRects(walls_[j], rect)) { isIntersect = true; break; }
-	if (!isIntersect) break;
-	//cout << "i =" << i << endl;
+		if (isIntersectRects(walls_[j], rect)) 
+		if (count < 1000)
+			{
+				isIntersect = true; break;
+			}
+			else
+				correctWall(rect, j, isVertical);
+if (!isIntersect) break;
+	count++;
 }
 Rectangle(dc_, rect.left, rect.up, rect.right, rect.bottom);
 		isVertical = rand() % 2;
@@ -471,7 +483,7 @@ Rectangle(dc_, rect.left, rect.up, rect.right, rect.bottom);
 		for (auto it = bullets_.begin(); it != bullets_.end(); ++it)
 		{
 			bool flag = false;
-			(*it)->move();
+			//(*it)->move();
 			
 			Rect rect = (*it)->getRect();
 
@@ -597,6 +609,21 @@ Rectangle(dc_, rect.left, rect.up, rect.right, rect.bottom);
 			if((!bullets_[i]->getIsMain()) &&(isIntersectRects(bullets_[i] -> getRect(), mainTank_->getRect()))) return true;
 		}
 		return false;
+	}
+	void Game::correctWall(Rect& rect, int index, bool isVertical) const
+	{
+		assert(false);
+		/*if (isVertical)
+		if (rect.up < walls_[index].bottom)
+				rect.up = walls_[index].bottom ;
+			else
+				rect.bottom = walls_[index].up ;
+		else
+			if (rect.left < walls_[index].right)
+				rect.left = walls_[index].right ;
+			else
+				rect.right = walls_[index].left ;
+*/
 	}
 	/*vector<shared_ptr<MilitaryInstance>> Game::getBullets()
 	{
