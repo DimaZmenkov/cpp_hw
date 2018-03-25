@@ -612,7 +612,7 @@ Rectangle(dc_, rect.left, rect.up, rect.right, rect.bottom);
 	}
 	void Game::correctWall(Rect& rect, int index, bool isVertical) const
 	{
-		assert(false);
+		//assert(false);
 		/*if (isVertical)
 		if (rect.up < walls_[index].bottom)
 				rect.up = walls_[index].bottom ;

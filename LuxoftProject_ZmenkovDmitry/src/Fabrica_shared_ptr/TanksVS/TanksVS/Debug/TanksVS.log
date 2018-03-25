@@ -1,1 +1,15 @@
-﻿  TanksVS.cpp
+﻿  Game.cpp
+d:\cpp_hw\luxoftproject_zmenkovdmitry\src\fabrica_shared_ptr\tanksvs\tanksvs\game.cpp(49): warning C4018: <: несоответствие типов со знаком и без знака
+d:\cpp_hw\luxoftproject_zmenkovdmitry\src\fabrica_shared_ptr\tanksvs\tanksvs\game.cpp(132): warning C4018: <: несоответствие типов со знаком и без знака
+d:\cpp_hw\luxoftproject_zmenkovdmitry\src\fabrica_shared_ptr\tanksvs\tanksvs\game.cpp(223): warning C4018: <: несоответствие типов со знаком и без знака
+d:\cpp_hw\luxoftproject_zmenkovdmitry\src\fabrica_shared_ptr\tanksvs\tanksvs\game.cpp(259): warning C4018: <: несоответствие типов со знаком и без знака
+d:\cpp_hw\luxoftproject_zmenkovdmitry\src\fabrica_shared_ptr\tanksvs\tanksvs\game.cpp(261): warning C4018: <: несоответствие типов со знаком и без знака
+d:\cpp_hw\luxoftproject_zmenkovdmitry\src\fabrica_shared_ptr\tanksvs\tanksvs\game.cpp(270): warning C4018: <: несоответствие типов со знаком и без знака
+d:\cpp_hw\luxoftproject_zmenkovdmitry\src\fabrica_shared_ptr\tanksvs\tanksvs\game.cpp(282): warning C4018: <: несоответствие типов со знаком и без знака
+d:\cpp_hw\luxoftproject_zmenkovdmitry\src\fabrica_shared_ptr\tanksvs\tanksvs\game.cpp(288): warning C4018: <: несоответствие типов со знаком и без знака
+d:\cpp_hw\luxoftproject_zmenkovdmitry\src\fabrica_shared_ptr\tanksvs\tanksvs\game.cpp(341): warning C4018: <: несоответствие типов со знаком и без знака
+d:\cpp_hw\luxoftproject_zmenkovdmitry\src\fabrica_shared_ptr\tanksvs\tanksvs\game.cpp(347): warning C4018: <: несоответствие типов со знаком и без знака
+d:\cpp_hw\luxoftproject_zmenkovdmitry\src\fabrica_shared_ptr\tanksvs\tanksvs\game.cpp(416): warning C4018: <: несоответствие типов со знаком и без знака
+d:\cpp_hw\luxoftproject_zmenkovdmitry\src\fabrica_shared_ptr\tanksvs\tanksvs\game.cpp(582): warning C4018: <: несоответствие типов со знаком и без знака
+d:\cpp_hw\luxoftproject_zmenkovdmitry\src\fabrica_shared_ptr\tanksvs\tanksvs\game.cpp(606): warning C4018: <: несоответствие типов со знаком и без знака
+d:\cpp_hw\luxoftproject_zmenkovdmitry\src\fabrica_shared_ptr\tanksvs\tanksvs\game.cpp(395): warning C4715: Game::convertTo: значение возвращается не при всех путях выполнения
