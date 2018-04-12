@@ -26,6 +26,7 @@ public:
 	AlgGr();
 	void createGraph();
 	bool testBridge(const Point& e);
+	bool testEulerCycle();
 void	initInd();
 void find(int i);
 void createEulerCycle(int i);
